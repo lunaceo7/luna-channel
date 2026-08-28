@@ -120,6 +120,26 @@ const SPEAKERS = [
       { label: "副業実績", val: "月10万円超" }
     ],
     since: "2026"
+  },
+  {
+    id: "ryuzaki",
+    name: "竜崎悠さん",
+    photo: "images/ryuzaki.png",
+    photoFit: "cover",
+    photoPosition: "center",
+    role: "Webマーケティング・広告運用",
+    org: "",
+    tags: ["Webマーケティング", "広告運用", "プロモーション"],
+    bio: [
+      "累計5,000万円規模の広告運用、Meta広告による約4万件のリスト獲得、1回のプロモーションで1,000万円以上の売上を実現。",
+      "Meta広告を中心とした広告運用から、リストマーケティング、公式LINE集客、プロモーション設計まで、Webマーケティングの実践領域を幅広く扱う。"
+    ],
+    facts: [
+      { label: "広告運用", val: "累計5,000万円規模" },
+      { label: "リスト獲得", val: "約4万件" },
+      { label: "プロモーション", val: "1,000万円以上" }
+    ],
+    since: "2026"
   }
 ];
 
@@ -138,6 +158,7 @@ const SPEAKERS = [
  * speakerId    : SPEAKERS に登録済みのプロフィールを持つ人物の場合のみ指定(カード上でリンク付きで表示される)
  * guestNote    : プロフィール未掲載のゲスト・元受講生などを紹介する場合のプレーンテキスト(リンクは作らない)
  * registration : 登録・参加人数など確認できている実績数字のみ(不明な回は省略)
+ * applyUrl     : 申込ページの実URL(確認できている回のみ。詳細ページに申込ボタンとして表示)
  * desc         : 一覧カード用の短い概要。確認できていない回は省略してタイトルのみ表示する
  * longDesc     : 詳細ページ用の紹介文(配列 = 段落ごと)。確認できていない回は省略可
  *
@@ -178,11 +199,13 @@ const SEMINARS = [
   {
     id: "u2026-09-18",
     kind: "event",
-    title: "セミナー開催予定",
-    guestNote: "登壇予定:竜崎さん",
+    title: "ゼロから始められる 集客・マーケティング実践講座",
+    speakerId: "ryuzaki",
     date: "2026-09-18",
     status: "upcoming",
-    category: "その他",
+    category: "マーケティング・集客",
+    desc: "集客・マーケティングをテーマに、Webマーケティングの実践について扱うセミナー。Meta広告、リストマーケティング、公式LINE集客、プロモーション設計など、竜崎悠さんの専門領域を踏まえた内容。",
+    applyUrl: "https://protagonist.jp/p/r/6cnbbtIR",
   },
   {
     id: "u2026-09-24",
@@ -819,10 +842,15 @@ function seminarCard(seminar) {
 }
 
 // 写真枠の中身:photoフィールドがあれば画像、なければイニシャル文字
+// 写真枠の中身:photoフィールドがあれば画像、なければイニシャル文字
+// photoFit / photoPosition で講師ごとに object-fit / object-position を指定可能
+// (既定は "contain" = トリミングなし全体表示。人物写真で顔を大きく見せたい場合は
+//  "cover" + photoPosition で調整する)
 function speakerPhotoInner(sp) {
-  return sp.photo
-    ? `<img src="${sp.photo}" alt="${sp.name}" loading="lazy">`
-    : `<span class="initial">${speakerInitial(sp.name)}</span>`;
+  if (!sp.photo) return `<span class="initial">${speakerInitial(sp.name)}</span>`;
+  const fit = sp.photoFit || "contain";
+  const pos = sp.photoPosition || "center";
+  return `<img src="${sp.photo}" alt="${sp.name}" loading="lazy" style="object-fit:${fit};object-position:${pos};">`;
 }
 
 function speakerFeaturedCard(sp) {
@@ -965,6 +993,7 @@ function renderSeminarDetail(seminar, container) {
           <h1>${seminar.title}</h1>
           ${seminar.subtitle ? `<p class="lead" style="color:var(--c-gold);font-family:var(--f-accent);font-style:italic;">${seminar.subtitle}</p>` : ""}
           ${seminar.desc ? `<p class="lead">${seminar.desc}</p>` : ""}
+          ${(seminar.applyUrl && seminar.status === "upcoming") ? `<a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:28px;">お申し込みはこちら</a>` : ""}
           <div class="detail-facts">
             <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div></div>
             <div class="fact"><div class="label">形式</div><div class="val" style="font-size:16px;">${seminar.format || "Zoomオンライン開催"}</div></div>
