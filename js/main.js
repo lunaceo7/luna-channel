@@ -32,6 +32,7 @@
 const SPEAKERS = [
   {
     id: "keita-kikuchi",
+    isHost: true,
     name: "菊地 啓太",
     enName: "Keita Kikuchi",
     role: "LUNAチャンネル代表 / AI×占い×収益化教育",
@@ -216,6 +217,14 @@ function getSpeaker(id) {
   return SPEAKERS.find(s => s.id === id);
 }
 
+function hostSpeaker() {
+  return SPEAKERS.find(s => s.isHost);
+}
+
+function guestSpeakers() {
+  return SPEAKERS.filter(s => !s.isHost);
+}
+
 function formatDate(iso) {
   const d = new Date(iso + "T00:00:00");
   if (isNaN(d)) return iso;
@@ -275,25 +284,45 @@ function speakerChip(speakerId) {
     </a>`;
 }
 
-function statusTag(status) {
-  if (status === "upcoming") return `<span class="tag gold">次回開催</span>`;
-  if (status === "regular") return `<span class="tag navy">レギュラー開催</span>`;
+function isDraftSeminar(seminar) {
+  // タイトルに全角ブラケットが含まれる = 未入力プレースホルダーとみなす
+  return seminar.title.includes("［");
+}
+
+function statusTag(seminar) {
+  if (isDraftSeminar(seminar)) return `<span class="tag">内容準備中</span>`;
+  if (seminar.status === "upcoming") return `<span class="tag gold">次回開催</span>`;
+  if (seminar.status === "regular") return `<span class="tag navy">レギュラー開催</span>`;
   return `<span class="tag">開催終了</span>`;
 }
 
 function seminarCard(seminar) {
+  const draft = isDraftSeminar(seminar);
   return `
-  <article class="card seminar-card">
+  <article class="card seminar-card${draft ? " is-draft" : ""}">
     <div class="tag-row">
-      ${statusTag(seminar.status)}
-      ${seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+      ${statusTag(seminar)}
+      ${draft ? "" : seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}
     </div>
     <div class="date">${seminar.status === "regular" ? seminar.time : formatDate(seminar.date)}</div>
-    <h3><a href="seminars.html?id=${seminar.id}">${seminar.title}</a></h3>
+    <h3>${draft ? seminar.title : `<a href="seminars.html?id=${seminar.id}">${seminar.title}</a>`}</h3>
     <p class="desc">${seminar.desc}</p>
     <div class="meta">
       ${speakerChip(seminar.speakerId)}
-      <a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy)">詳細</a>
+      ${draft ? "" : `<a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy)">詳細を見る</a>`}
+    </div>
+  </article>`;
+}
+
+function speakerFeaturedCard(sp) {
+  return `
+  <article class="speaker-featured">
+    <a href="speakers.html?id=${sp.id}"><div class="sf-photo"><span class="initial">${speakerInitial(sp.name)}</span></div></a>
+    <div class="sf-body">
+      <div class="sf-role">主宰 / ${sp.role}</div>
+      <h3><a href="speakers.html?id=${sp.id}">${sp.name}</a></h3>
+      <p>${sp.org}</p>
+      <div class="link-row"><a href="speakers.html?id=${sp.id}" class="btn-arrow" style="color:var(--c-navy)">プロフィールを見る</a></div>
     </div>
   </article>`;
 }
@@ -351,18 +380,20 @@ function initIndexPage() {
     latestEl.innerHTML = pastSeminars().slice(0, 3).map(seminarCard).join("");
   }
 
-  // 講師紹介(上位4名)
+  // 講師紹介:主宰を横長カードで、ゲスト講師を3カラムで表示(孤立カードを防ぐ)
+  const hostEl = $("#index-speaker-host");
+  if (hostEl) {
+    const host = hostSpeaker();
+    if (host) hostEl.innerHTML = speakerFeaturedCard(host);
+  }
   const speakersEl = $("#index-speakers");
   if (speakersEl) {
-    speakersEl.innerHTML = SPEAKERS.slice(0, 4).map(speakerCard).join("");
+    speakersEl.innerHTML = guestSpeakers().map(speakerCard).join("");
   }
 
-  // 実績サマリー
-  const totalPast = SEMINARS.filter(s => s.status !== "upcoming").length;
+  // 実績サマリー(ヒーローは"ダイジェスト"に絞り、詳細は実績バンドに集約)
   setText("#stat-seminars", "47回+");
-  setText("#stat-speakers", `${SPEAKERS.length}名`);
-  setText("#stat-students", "2,500名+");
-  setText("#stat-courses", "21講座");
+  setText("#stat-since", "2023年〜");
 }
 
 function initSeminarsPage() {
@@ -410,7 +441,7 @@ function renderSeminarDetail(seminar, container) {
       <a href="seminars.html" class="back-link">スケジュール一覧に戻る</a>
       <div class="detail-hero" style="grid-template-columns: 1fr;">
         <div class="detail-info">
-          <div class="detail-tags">${statusTag(seminar.status)}${seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+          <div class="detail-tags">${statusTag(seminar)}${seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
           <h1>${seminar.title}</h1>
           <p class="lead">${seminar.desc}</p>
           <div class="detail-facts">
@@ -478,8 +509,13 @@ function initSpeakersPage() {
 
   listView.style.display = "block";
   detailView.style.display = "none";
+
+  const host = hostSpeaker();
+  const hostEl = $("#speakers-host");
+  if (hostEl && host) hostEl.innerHTML = speakerFeaturedCard(host);
+
   const gridEl = $("#speakers-grid");
-  if (gridEl) gridEl.innerHTML = SPEAKERS.map(speakerCard).join("");
+  if (gridEl) gridEl.innerHTML = guestSpeakers().map(speakerCard).join("");
 }
 
 function renderSpeakerDetail(sp, container) {
