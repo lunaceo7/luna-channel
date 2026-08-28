@@ -140,6 +140,23 @@ const SPEAKERS = [
       { label: "プロモーション", val: "1,000万円以上" }
     ],
     since: "2026"
+  },
+  {
+    id: "nakayama",
+    name: "中山陽子さん",
+    photo: "images/nakayama.jpg",
+    role: "LUNA受講生 → 登壇講師",
+    org: "",
+    tags: ["副業", "占い"],
+    bio: [
+      "ルナCEOの受講生として学び・実践した経験をもとに、副業占い師としての活動を展開。",
+      "LUNAチャンネルでは、自身の実践経験をもとに「最初の1万円」をテーマとしたセミナーに登壇。"
+    ],
+    facts: [
+      { label: "登壇", val: "第48回" },
+      { label: "登録実績", val: "40名" }
+    ],
+    since: "2026"
   }
 ];
 
@@ -631,7 +648,7 @@ const SEMINARS = [
     kind: "event",
     episode: 48,
     title: "副業占い師が最初の1万円を稼ぐまでにやること、全部話します",
-    guestNote: "ゲスト:中山陽子さん(ルナCEOの受講生)",
+    speakerId: "nakayama",
     date: "2026-07-09",
     status: "past",
     category: "副業・収益化",
