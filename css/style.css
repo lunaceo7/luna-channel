@@ -530,7 +530,7 @@ section{ padding: var(--section-y) 0; }
    ============================================================ */
 .stat-band{
   display:grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 0;
   border: 1px solid var(--c-line-dark);
   border-radius: var(--radius);
@@ -695,7 +695,35 @@ section{ padding: var(--section-y) 0; }
 .timeline-item .t-date{ font-size:12.5px; color:var(--c-gray); margin-bottom:8px; letter-spacing:.03em; }
 .timeline-item h3{ font-size: 19px; margin-bottom: 8px; }
 .timeline-item p{ color: var(--c-gray); font-size: 14px; max-width: 620px; }
-.timeline-item .t-tags{ display:flex; gap:8px; margin-top:12px; }
+.timeline-item .t-tags{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+
+/* 年・月でのグルーピング(過去セミナー実績ページ) */
+.archive-year{ margin-bottom: 8px; }
+.archive-year-label{
+  font-family: var(--f-accent);
+  font-size: 30px;
+  color: var(--c-navy);
+  padding: 32px 0 8px;
+  border-bottom: 2px solid var(--c-navy);
+  margin-bottom: 8px;
+}
+.archive-year:first-child .archive-year-label{ padding-top: 0; }
+.archive-month-label{
+  font-size: 13px;
+  letter-spacing: .05em;
+  color: var(--c-gold);
+  padding: 20px 0 4px 0;
+  margin-left: 90px;
+}
+@media (max-width:720px){
+  .archive-month-label{ margin-left: 54px; }
+}
+
+/* プロフィール未掲載のゲスト表記(リンクなし) */
+.guest-note{
+  font-size: 13px;
+  color: var(--c-gray);
+}
 
 /* Detail sections (speaker / seminar detail) */
 .detail-hero{
@@ -777,7 +805,7 @@ section{ padding: var(--section-y) 0; }
   .featured-seminar{ grid-template-columns: 1fr; }
   .featured-seminar .fs-visual{ min-height:120px; padding: 24px 0; }
   .stat-band{ grid-template-columns: repeat(2,1fr); }
-  .stat-band .stat:nth-child(2){ border-right:none; }
+  .stat-band .stat:nth-child(even){ border-right:none; }
   .channel-grid{ grid-template-columns: 1fr; }
   .company-block{ grid-template-columns: 1fr; }
   .detail-hero{ grid-template-columns: 1fr; }

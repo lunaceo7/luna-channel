@@ -21,7 +21,7 @@
 /**
  * 講師データ
  * id            : 他ページから参照するための一意なID(半角英数・ハイフン)
- * name          : 氏名
+ * name          : サイト上に表示する名前(講師表記名)
  * role          : 肩書き・専門分野(1行)
  * org           : 所属・経歴の一言
  * tags          : 一覧カードに表示するタグ(3つ程度推奨)
@@ -33,14 +33,14 @@ const SPEAKERS = [
   {
     id: "keita-kikuchi",
     isHost: true,
-    name: "菊地 啓太",
-    enName: "Keita Kikuchi",
+    name: "ルナCEO",
+    enName: "Luna CEO",
     role: "LUNAチャンネル代表 / AI×占い×収益化教育",
     org: "合同会社ルナマーケティング 代表",
     tags: ["AI活用", "占い×AI", "収益化教育"],
     bio: [
       "食品業界(スーパー・仲卸・輸入商社)で15年にわたり営業・バイヤーを務めたのち、2023年8月に独立。同年6月にAIと出会い、以降「AI×占い」を軸とした収益化教育を専門としている。",
-      "Udemyでは占い×AIをテーマにした講座を21講座公開し、受講生は2,500名を超える。週次のZoomセミナーは開催回数47回を超え、個別コンサルティングやコミュニティ運営も行う。",
+      "Udemyでは占い×AIをテーマにした講座を21講座公開し、受講生は2,500名を超える。週次のZoomセミナーは開催回数47回を超え、各分野の専門家を招いたジョイントセミナーも継続的に開催している。",
       "アドラー心理学の共同体感覚や、行動経済学におけるプロスペクト理論をベースにした「非操作的な商売」を経営哲学として掲げている。"
     ],
     facts: [
@@ -51,19 +51,19 @@ const SPEAKERS = [
     since: "2023"
   },
   {
-    id: "takatoshi-hioki",
-    name: "日沖 貴年",
-    enName: "Takatoshi Hioki",
-    role: "月例セミナーゲスト / ITコンサルタント",
-    org: "元Microsoft",
-    tags: ["Claude Code", "AI活用", "ITコンサルティング"],
+    id: "cakeman",
+    name: "ケーキマン",
+    enName: "Cakeman",
+    role: "月例ゲスト講師 / ITコンサルタント",
+    org: "Microsoft・Toyota出身",
+    tags: ["Claude Code", "AI活用", "ゴールデンドーン"],
     bio: [
-      "元Microsoftのキャリアを経て独立。企業のIT活用支援や生成AI導入コンサルティングを行う傍ら、LUNAチャンネルでは月例セミナーゲストとして登壇している。",
-      "「Claude Code」をはじめとする最新の開発・業務効率化ツールを、専門知識のない人にも分かりやすく伝えるセミナーに定評がある。"
+      "Microsoft、Toyotaでキャリアを重ねたのち独立。論理と直感の両面からテーマを捉える視点を持ち、企業のIT活用支援や生成AI導入コンサルティングを行っている。",
+      "LUNAチャンネルには月例ゲストとして登壇し、「Claude Code」など実務で使える生成AIの活用法から、138年の歴史を持つ秘密結社ゴールデンドーンの思想を現代の日常に落とし込むテーマまで、幅広いセミナーを手掛けている。"
     ],
     facts: [
       { label: "登壇形式", val: "月例ゲスト" },
-      { label: "専門領域", val: "生成AI導入" }
+      { label: "経歴", val: "Microsoft・Toyota" }
     ],
     since: "2026"
   },
@@ -102,104 +102,509 @@ const SPEAKERS = [
 ];
 
 /**
- * セミナーデータ
- * id         : 一意なID
- * title      : セミナータイトル
- * speakerId  : SPEAKERS の id と対応
- * date       : "YYYY-MM-DD" (サンプル値です。実開催日に置き換えてください)
- * time       : 開催時間の表記
- * format     : 開催形式
- * status     : "upcoming"(今後) / "past"(過去) / "regular"(レギュラー開催)
- * category   : 一覧ページの絞り込みタグ
- * tags       : カード表示用タグ
- * price      : 参加費表記
- * desc       : 一覧カード用の短い概要
- * longDesc   : 詳細ページ用の紹介文(配列 = 段落ごと)
+ * セミナーデータ(1件 = 1回の開催記録、または「第1〜8回」のようなまとめ記録)
+ * id           : 一意なID
+ * episode      : 回数(数値、または "1〜8" のような範囲文字列)。回数が確認できない回は省略
+ * title        : 公開用セミナータイトル
+ * subtitle     : 補足コピー(任意)
+ * date         : "YYYY-MM-DD"(ソート用。正確な日付が不明な期間はその範囲の開始日を入れ、dateLabelで表示を上書きする)
+ * dateLabel    : 表示用の日付ラベル(任意。「2025年2月〜5月」のように単一の日付で表せない場合に使用)
+ * sessionCount : このレコードが表す実際の開催回数(「第1〜8回」のようにまとめて1レコードにしている場合のみ指定。既定は1)
+ * status       : "upcoming"(今後確定分) / "past"(開催済み) / "regular"(kind:"series"用)
+ * category     : 分類タグ(絞り込みに使用)。実データから明確に判別できない回は "その他"
+ * tags         : カード表示用の補助タグ(任意)
+ * speakerId    : SPEAKERS に登録済みのプロフィールを持つ人物の場合のみ指定(カード上でリンク付きで表示される)
+ * guestNote    : プロフィール未掲載のゲスト・元受講生などを紹介する場合のプレーンテキスト(リンクは作らない)
+ * registration : 登録・参加人数など確認できている実績数字のみ(不明な回は省略)
+ * desc         : 一覧カード用の短い概要。確認できていない回は省略してタイトルのみ表示する
+ * longDesc     : 詳細ページ用の紹介文(配列 = 段落ごと)。確認できていない回は省略可
+ *
+ * 注意:このサイトは「実績を見せる」ことが目的のため、オープンチャット・
+ * サブスク・コミュニティ・販売導線・クロージングに関する情報は一切
+ * 記載しないこと。また、確認できていない情報(日付・人数・肩書き等)は
+ * 推測で埋めず、フィールド自体を省略すること。
  */
 const SEMINARS = [
   {
-    id: "next-seminar-sample",
-    title: "［次回セミナータイトルをここに入力］",
+    id: "s01-08",
+    kind: "event",
+    episode: "1〜8",
+    title: "Udemyセミナーシリーズ(計8回)",
+    date: "2025-02-01",
+    dateLabel: "2025年2月〜5月",
+    status: "past",
+    category: "コンテンツ制作",
+    sessionCount: 8,
+  },
+  {
+    id: "s09",
+    kind: "event",
+    episode: 9,
+    title: "Udemy勉強会:自動収入と爆速講座作成",
+    date: "2025-05-22",
+    status: "past",
+    category: "コンテンツ制作",
+  },
+  {
+    id: "s10",
+    kind: "event",
+    episode: 10,
+    title: "AIが講座を作る時代へ ──1時間で収益化までの仕組み公開",
+    date: "2025-06-11",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s11",
+    kind: "event",
+    episode: 11,
+    title: "AI×自己資源から未来を構築するセミナー",
+    date: "2025-06-26",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s12",
+    kind: "event",
+    episode: 12,
+    title: "LUNA CEO式:ゼロから講座を広げるAI×実践講座",
     speakerId: "keita-kikuchi",
-    date: "2026-09-15",
-    time: "20:00〜21:30",
-    format: "Zoomオンライン開催",
-    status: "upcoming",
-    category: "AI活用",
-    tags: ["次回開催"],
-    price: "参加費：無料",
-    desc: "次回セミナーの概要をここに入力してください。日時・登壇者・内容を確定後、このカードを更新するだけでトップページとスケジュールページに反映されます。",
+    date: "2025-06-28",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s13",
+    kind: "event",
+    episode: 13,
+    title: "AI活用セミナー",
+    date: "2025-06-30",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s14",
+    kind: "event",
+    episode: 14,
+    title: "AI動画作成(Vrew)＆B型作業所外注＆ストアカ活用セミナー",
+    date: "2025-07-22",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s15",
+    kind: "event",
+    episode: 15,
+    title: "音声収録セミナー(実演付き)",
+    date: "2025-08-01",
+    status: "past",
+    category: "コンテンツ制作",
+  },
+  {
+    id: "s16",
+    kind: "event",
+    episode: 16,
+    title: "プロフィール画像＆LINE公式セットアップ講座",
+    guestNote: "元受講生が登壇(副業で月20万円以上達成者)",
+    date: "2025-08-15",
+    status: "past",
+    category: "マーケティング・集客",
+    registration: "登録14名",
+  },
+  {
+    id: "s17",
+    kind: "event",
+    episode: 17,
+    title: "ココナラ・プラチナランク量産計画",
+    date: "2025-08-19",
+    status: "past",
+    category: "マーケティング・集客",
+  },
+  {
+    id: "s18",
+    kind: "event",
+    episode: 18,
+    title: "AI動画実演",
+    guestNote: "元受講生が登壇(ココナラでプラチナランク・副業で月10万円以上達成者)",
+    date: "2025-08-25",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s19",
+    kind: "event",
+    episode: 19,
+    title: "AIタロット講座",
+    guestNote: "元受講生が登壇(占いサービスで月10万円以上達成者)",
+    date: "2025-09-03",
+    status: "past",
+    category: "AI×占い",
+    registration: "登録12名",
+  },
+  {
+    id: "s20",
+    kind: "event",
+    episode: 20,
+    title: "AIで創る!タロット動画ワークショップ",
+    guestNote: "元受講生が登壇(AIでコンテンツ作成、SNSで集客し、月10万円以上達成者)",
+    date: "2025-09-17",
+    status: "past",
+    category: "AI×占い",
+  },
+  {
+    id: "s21",
+    kind: "event",
+    episode: 21,
+    title: "音声SNS／音声収録セミナー",
+    date: "2025-09-22",
+    status: "past",
+    category: "コンテンツ制作",
+  },
+  {
+    id: "s22",
+    kind: "event",
+    episode: 22,
+    title: "AI動画セミナー",
+    guestNote: "元受講生が登壇(占いサービスで月10万円以上達成者)",
+    date: "2025-10-08",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s23",
+    kind: "event",
+    episode: 23,
+    title: "ゼロから占い師で稼げるようになるには?",
+    guestNote: "元受講生が登壇(占いサービスで月20万円以上達成者)",
+    date: "2025-10-16",
+    status: "past",
+    category: "副業・収益化",
+  },
+  {
+    id: "s24",
+    kind: "event",
+    episode: 24,
+    title: "最先端!sora2 AI動画ワークショップ",
+    guestNote: "元受講生が登壇(副業で月10万円以上達成者)",
+    date: "2025-10-20",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s25",
+    kind: "event",
+    episode: 25,
+    title: "1時間で出来る!はじめてのAI手相占い講座",
+    guestNote: "元受講生が登壇(占いサービスで月10万円以上達成者)",
+    date: "2025-10-24",
+    status: "past",
+    category: "AI×占い",
+  },
+  {
+    id: "s26",
+    kind: "event",
+    episode: 26,
+    title: "講師デビューで集客が変わる!Udemy新戦略",
+    date: "2025-11-05",
+    status: "past",
+    category: "マーケティング・集客",
+  },
+  {
+    id: "s27",
+    kind: "event",
+    episode: 27,
+    title: "副業占いで稼いだ3人の直近事例",
+    guestNote: "元受講生3名が登壇(3名とも占いサービスで月10万円以上達成者)",
+    date: "2025-11-13",
+    status: "past",
+    category: "副業・収益化",
+    registration: "登録29名",
+  },
+  {
+    id: "s28",
+    kind: "event",
+    episode: 28,
+    title: "AI動画実演【無料】",
+    guestNote: "元受講生が登壇(副業で月10万円以上達成者)",
+    date: "2025-11-17",
+    status: "past",
+    category: "AI・生成AI",
+    registration: "登録54名",
+  },
+  {
+    id: "s29",
+    kind: "event",
+    episode: 29,
+    title: "AI占い＋SNS集客ツール設定講座",
+    guestNote: "元受講生が登壇(副業占いで月10万円以上達成者)",
+    date: "2025-11-25",
+    status: "past",
+    category: "AI×占い",
+  },
+  {
+    id: "s30",
+    kind: "event",
+    episode: 30,
+    title: "Notion無料セミナー",
+    date: "2025-12-03",
+    status: "past",
+    category: "その他",
+  },
+  {
+    id: "s31",
+    kind: "event",
+    episode: 31,
+    title: "西洋占星術＋AIコラボセミナー",
+    guestNote: "ゲスト講師:hanaさん(西洋占星術YouTuber・西洋占星術の教室を主催)",
+    date: "2025-12-16",
+    status: "past",
+    category: "AI×占い",
+    registration: "登録16名",
+  },
+  {
+    id: "s32",
+    kind: "event",
+    episode: 32,
+    title: "西洋占星術＋AIコラボセミナー day2",
+    guestNote: "ゲスト講師:hanaさん(西洋占星術YouTuber・西洋占星術の教室を主催)",
+    date: "2025-12-17",
+    status: "past",
+    category: "AI×占い",
+    registration: "登録19名",
+  },
+  {
+    id: "s33",
+    kind: "event",
+    episode: 33,
+    title: "ボトルネック診断セミナー",
+    date: "2026-01-16",
+    status: "past",
+    category: "その他",
+  },
+  {
+    id: "s34",
+    kind: "event",
+    episode: 34,
+    title: "月20時間の無駄が消えた。Notion中心設計の威力",
+    date: "2026-01-23",
+    status: "past",
+    category: "その他",
+  },
+  {
+    id: "s35",
+    kind: "event",
+    episode: 35,
+    title: "自動集客セミナー｜NotebookLM×Gemini",
+    guestNote: "ゲスト講師:あらやさん(占い師の集客支援専門家・作家)",
+    date: "2026-01-26",
+    status: "past",
+    category: "マーケティング・集客",
+  },
+  {
+    id: "s36",
+    kind: "event",
+    episode: 36,
+    title: "漫画AI実演セミナー｜Nano Banana Pro",
+    date: "2026-01-29",
+    status: "past",
+    category: "AI・生成AI",
+  },
+  {
+    id: "s37",
+    kind: "event",
+    episode: 37,
+    title: "ノウハウコレクター卒業セミナー｜3つのステップで脱・学び沼",
+    date: "2026-02-04",
+    status: "past",
+    category: "思考・自己成長",
+  },
+  {
+    id: "s38",
+    kind: "event",
+    episode: 38,
+    title: "これ、普通に売れます(AI×マヤ暦)",
+    date: "2026-04-09",
+    status: "past",
+    category: "AI×占い",
+    registration: "登録31名",
+  },
+  {
+    id: "s39",
+    kind: "event",
+    episode: 39,
+    title: "なぜか選ばれる人の共通点",
+    date: "2026-04-16",
+    status: "past",
+    category: "思考・自己成長",
+    registration: "登録17名",
+  },
+  {
+    id: "s40",
+    kind: "event",
+    episode: 40,
+    title: "オンライン資産の作り方",
+    date: "2026-04-23",
+    status: "past",
+    category: "副業・収益化",
+    registration: "登録19名",
+  },
+  {
+    id: "s41",
+    kind: "event",
+    episode: 41,
+    title: "Udemyで2,500人集まるまでにやったこと・やめたこと",
+    date: "2026-04-30",
+    status: "past",
+    category: "マーケティング・集客",
+    registration: "登録17名",
+  },
+  {
+    id: "s42",
+    kind: "event",
+    episode: 42,
+    title: "1ヶ月で50人と会ってわかったこと、全部話します",
+    date: "2026-05-07",
+    status: "past",
+    category: "マーケティング・集客",
+    registration: "登録31名",
+  },
+  {
+    id: "s43",
+    kind: "event",
+    episode: 43,
+    title: "5分でAI動画が作れる｜元マイクロソフトマネージャーが教えます",
+    speakerId: "cakeman",
+    date: "2026-05-14",
+    status: "past",
+    category: "AI・生成AI",
+    registration: "登録30名",
+  },
+  {
+    id: "s44",
+    kind: "event",
+    episode: 44,
+    title: "【オンライン集客】で差がつく理由",
+    date: "2026-05-21",
+    status: "past",
+    category: "マーケティング・集客",
+    registration: "登録17名",
+  },
+  {
+    id: "s45",
+    kind: "event",
+    episode: 45,
+    title: "ChatGPTだけじゃ足りない理由｜Claude Code × Google I/O 2026",
+    speakerId: "cakeman",
+    date: "2026-06-18",
+    status: "past",
+    category: "AI・生成AI",
+    registration: "登録57名",
+  },
+  {
+    id: "s46",
+    kind: "event",
+    episode: 46,
+    title: "ビジネスも人間関係も劇的に軽くなる「事実」と「解釈」の思考整理術",
+    speakerId: "shino-aotsuki",
+    date: "2026-06-25",
+    status: "past",
+    category: "思考・自己成長",
+    registration: "登録19名",
+  },
+  {
+    id: "s47",
+    kind: "event",
+    episode: 47,
+    title: "AIには視えない『運命の裏側』を読み解く。プロ占い師とAIを使いこなして最速でオンライン起業する方法",
+    speakerId: "yasuo-kurihara",
+    date: "2026-06-30",
+    status: "past",
+    category: "AI×占い",
+    registration: "登録50名",
+  },
+  {
+    id: "s48",
+    kind: "event",
+    episode: 48,
+    title: "副業占い師が最初の1万円を稼ぐまでにやること、全部話します",
+    guestNote: "ゲスト:中山陽子さん(ルナCEOの受講生)",
+    date: "2026-07-09",
+    status: "past",
+    category: "副業・収益化",
+    registration: "登録40名",
+  },
+  {
+    id: "s49",
+    kind: "event",
+    episode: 49,
+    title: "夢の印税生活を目指しませんか?Kindle作家デビュー入門",
+    guestNote: "ゲスト:ながたきさん(副業でKindle最高月収20万円以上)",
+    date: "2026-07-16",
+    status: "past",
+    category: "コンテンツ制作",
+    registration: "登録31名",
+  },
+  {
+    id: "golden-dawn-2",
+    kind: "event",
+    title: "ゴールデンドーン魔術入門 第2回",
+    subtitle: "138年の秘密結社の奥義を、元エリートビジネスマンが解説",
+    speakerId: "cakeman",
+    date: "2026-07-17",
+    status: "past",
+    category: "スピリチュアル・秘教",
+    registration: "参加者約17名",
     longDesc: [
-      "次回セミナーの詳細な紹介文をここに入力してください。",
-      "対象者・得られること・当日の流れなどを記載すると、初めて訪れた方にも安心感を持って申し込んでもらえます。"
-    ]
+      "講師はYOSUGAさん、Or Matok(オル・マトク／אור מתוק)さん。ゲストとして、Microsoft・Toyotaでのキャリアを持つケーキマン氏を迎えて開催。",
+      "ゴールデンドーンの基礎、引き寄せ、タロット、数秘術、五芒星・六芒星、天使召喚、日常に隠された暗号などを、キャリア・人間関係・資産形成・目標達成といった実生活の視点とあわせて紹介した。",
+      "論理と直感の両立という観点から、138年の歴史を持つ秘密結社の奥義を現代的に解説する内容となった。",
+    ],
+  },
+  {
+    id: "ai-mayoi-graduation",
+    kind: "event",
+    title: "AI迷子卒業セミナー",
+    subtitle: "50代・60代からのAI活用。ChatGPTを「あなたの代わりに働く部下」にする方法",
+    speakerId: "cakeman",
+    date: "2026-07-30",
+    status: "past",
+    category: "AI・生成AI",
+    registration: "登録約30名・当日20名以上参加",
+    longDesc: [
+      "50代・60代を中心としたAI初心者に向け、ChatGPT・Gemini・Claudeといった主要AIツールの使い分け、個人情報・セキュリティの注意点、AIエージェントの基礎までを整理したセミナー。",
+      "登録は約30名、当日は20名以上が参加した。",
+    ],
+  },
+  {
+    id: "golden-dawn-3",
+    kind: "event",
+    title: "ゴールデンドーン魔術入門 第3回",
+    subtitle: "【古代引き寄せ】秘密結社の儀式を今風に転換!実践する4つのステップ",
+    speakerId: "cakeman",
+    date: "2026-07-31",
+    status: "past",
+    category: "スピリチュアル・秘教",
+    longDesc: [
+      "講師はYOSUGAさん、Or Matok(オル・マトク／אור מתוק)さん。第2回で紹介したゴールデンドーンの思想・体系を、現代の日常生活でどのように活用できるかを考える実践編として開催。",
+      "ニオフィト儀式を題材に、時間帯・意識・イメージ・簡略化・日常への応用を紹介したほか、4・13・11・16・24・88といった数字を日付や行動、目標設定にどう活かすかを扱った。",
+      "紙とボールペンを使った自己観察の方法や、ゴールデンドーンに関する英語・ヘブライ語・象徴的資料をAIで研究・整理する「解読補助」としてのAI活用法も紹介した。",
+    ],
   },
   {
     id: "weekly-zoom-regular",
+    kind: "series",
     title: "週次Zoomセミナー(レギュラー開催)",
     speakerId: "keita-kikuchi",
-    date: "2026-06-01",
-    time: "毎週開催・詳細は個別告知",
+    time: "毎週開催",
     format: "Zoomオンライン開催",
     status: "regular",
-    category: "AI活用",
-    tags: ["レギュラー開催", "占い×AI"],
-    price: "参加費：回により異なる",
-    desc: "AI×占いをテーマに毎週開催してきたレギュラーセミナー。これまでの開催回数は47回を超え、継続的な学びの場として運営している。",
+    category: "AI×占い",
+    tags: ["レギュラー開催"],
+    desc: "2025年2月から毎週継続してきたレギュラーセミナー。上記の第1回〜第49回、および2026年7月17日・30日・31日の特別開催は、いずれもこのレギュラー開催枠の記録です。",
     longDesc: [
-      "LUNAチャンネルの中核となるレギュラーセミナー。AIと占いを掛け合わせた収益化のノウハウを、実践形式で毎週伝えている。",
-      "2026年時点で開催回数は47回を超え、初めての方でも参加しやすいテーマ設計を心がけている。"
-    ]
+      "LUNAチャンネルの中核となるレギュラーセミナー。2025年2月の開始以来、AI活用・占い・副業・マーケティング・コンテンツ制作・思考法など幅広いテーマで毎週開催している。",
+    ],
   },
-  {
-    id: "fortune-ai-style",
-    title: "占い×AIで拓く、新しい鑑定スタイル",
-    speakerId: "yasuo-kurihara",
-    date: "2026-06-25",
-    time: "20:00〜21:30",
-    format: "Zoomオンライン開催・無料",
-    status: "past",
-    category: "占い",
-    tags: ["占い", "AI活用"],
-    price: "参加費：無料",
-    desc: "鑑定実績8,000件超の栗原靖夫氏を迎え、対面鑑定の経験とAIを組み合わせた新しい鑑定スタイルを紹介した無料セミナー。",
-    longDesc: [
-      "長年の鑑定経験を持つ栗原靖夫氏とのジョイントセミナー。AIを鑑定にどう取り入れるかを、実例を交えて解説した。",
-      "参加者からは「経験とAIの掛け合わせ方が具体的で分かりやすかった」との声が多く寄せられた。"
-    ]
-  },
-  {
-    id: "fact-and-interpretation",
-    title: "事実と解釈",
-    speakerId: "shino-aotsuki",
-    date: "2026-06-11",
-    time: "20:00〜21:30",
-    format: "Zoomオンライン開催・無料",
-    status: "past",
-    category: "マインドセット",
-    tags: ["マインドセット", "対話"],
-    price: "参加費：無料",
-    desc: "「事実」と「解釈」を切り分けて捉える思考法をテーマにした、蒼月しの氏とのジョイント無料セミナー。",
-    longDesc: [
-      "起きた出来事そのものと、それに対する自分の解釈を切り分けて考えることで、感情に振り回されない意思決定ができるようになる——という視点を、具体的なワークを交えて紹介した。"
-    ]
-  },
-  {
-    id: "claude-code-business",
-    title: "Claude Codeで変わる仕事術",
-    speakerId: "takatoshi-hioki",
-    date: "2026-06-18",
-    time: "20:00〜21:30",
-    format: "Zoomオンライン開催・無料",
-    status: "past",
-    category: "AI活用",
-    tags: ["Claude Code", "AI活用"],
-    price: "参加費：無料",
-    desc: "元Microsoftの日沖貴年氏を迎え、「Claude Code」を業務にどう取り入れるかを解説した無料セミナー。",
-    longDesc: [
-      "生成AIを日々の業務にどう組み込むかを、実際の操作画面を見せながら解説。専門知識がない参加者にも分かりやすいと好評だった。"
-    ]
-  }
 ];
 
 /* ==============================================================
@@ -250,6 +655,11 @@ function regularSeminars() {
   return SEMINARS.filter(s => s.status === "regular");
 }
 
+function latestSeminar() {
+  // 直近に開催した(=最新の)個別セミナーを1件返す
+  return pastSeminars()[0] || null;
+}
+
 /* ==============================================================
    3. RENDER — 部品生成
    ============================================================== */
@@ -284,32 +694,44 @@ function speakerChip(speakerId) {
     </a>`;
 }
 
-function isDraftSeminar(seminar) {
-  // タイトルに全角ブラケットが含まれる = 未入力プレースホルダーとみなす
-  return seminar.title.includes("［");
+function displayDate(seminar) {
+  return seminar.dateLabel || formatDate(seminar.date);
+}
+
+function episodeTag(seminar) {
+  if (!seminar.episode) return "";
+  return `<span class="tag navy">第${seminar.episode}回</span>`;
+}
+
+// 登壇者表示:プロフィールがある人(SPEAKERS)はリンク付きチップ、
+// プロフィールのない人はプレーンテキスト(guestNote)で表示しリンクは作らない
+function presenterBlock(seminar) {
+  if (seminar.speakerId) return speakerChip(seminar.speakerId);
+  if (seminar.guestNote) return `<span class="guest-note">${seminar.guestNote}</span>`;
+  return "";
 }
 
 function statusTag(seminar) {
-  if (isDraftSeminar(seminar)) return `<span class="tag">内容準備中</span>`;
   if (seminar.status === "upcoming") return `<span class="tag gold">次回開催</span>`;
   if (seminar.status === "regular") return `<span class="tag navy">レギュラー開催</span>`;
   return `<span class="tag">開催終了</span>`;
 }
 
 function seminarCard(seminar) {
-  const draft = isDraftSeminar(seminar);
   return `
-  <article class="card seminar-card${draft ? " is-draft" : ""}">
+  <article class="card seminar-card">
     <div class="tag-row">
       ${statusTag(seminar)}
-      ${draft ? "" : seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+      ${episodeTag(seminar)}
+      ${(seminar.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
     </div>
-    <div class="date">${seminar.status === "regular" ? seminar.time : formatDate(seminar.date)}</div>
-    <h3>${draft ? seminar.title : `<a href="seminars.html?id=${seminar.id}">${seminar.title}</a>`}</h3>
-    <p class="desc">${seminar.desc}</p>
+    <div class="date">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div>
+    <h3><a href="seminars.html?id=${seminar.id}">${seminar.title}</a></h3>
+    ${seminar.desc ? `<p class="desc">${seminar.desc}</p>` : ""}
+    ${seminar.registration ? `<div class="tag gold" style="margin-top:10px;display:inline-block;">${seminar.registration}</div>` : ""}
     <div class="meta">
-      ${speakerChip(seminar.speakerId)}
-      ${draft ? "" : `<a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy)">詳細を見る</a>`}
+      ${presenterBlock(seminar)}
+      <a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy);margin-left:auto;">詳細を見る</a>
     </div>
   </article>`;
 }
@@ -349,35 +771,35 @@ function speakerCard(sp) {
    ============================================================== */
 
 function initIndexPage() {
-  // 次回開催セミナー
-  const next = upcomingSeminars()[0];
+  // 直近の開催実績(このサイトは実績紹介が目的のため、"申込"ではなく"直近の記録"を見せる)
+  const latest = latestSeminar();
   const featuredEl = $("#featured-seminar");
   if (featuredEl) {
-    if (next) {
-      const sp = getSpeaker(next.speakerId);
+    if (latest) {
+      const sp = getSpeaker(latest.speakerId);
       featuredEl.innerHTML = `
         <div class="fs-info">
-          <div class="eyebrow">Next Session</div>
-          <div class="tag gold" style="margin-bottom:14px;display:inline-block;">${formatDate(next.date)}</div>
-          <h3>${next.title}</h3>
-          <p class="fs-desc">${next.desc}</p>
+          <div class="eyebrow">Recently Held</div>
+          <div class="tag gold" style="margin-bottom:14px;display:inline-block;">${displayDate(latest)}</div>
+          <h3>${latest.title}</h3>
+          ${latest.desc ? `<p class="fs-desc">${latest.desc}</p>` : ""}
           <div class="fs-meta">
-            <div class="fs-meta-item"><div class="label">登壇</div><div class="val">${sp ? sp.name : ""}</div></div>
-            <div class="fs-meta-item"><div class="label">時間</div><div class="val">${next.time}</div></div>
-            <div class="fs-meta-item"><div class="label">形式</div><div class="val">${next.format}</div></div>
+            ${sp ? `<div class="fs-meta-item"><div class="label">登壇</div><div class="val">${sp.name}</div></div>` : (latest.guestNote ? `<div class="fs-meta-item"><div class="label">登壇</div><div class="val">${latest.guestNote}</div></div>` : "")}
+            <div class="fs-meta-item"><div class="label">形式</div><div class="val">${latest.format || "Zoomオンライン開催"}</div></div>
+            ${latest.registration ? `<div class="fs-meta-item"><div class="label">参加実績</div><div class="val">${latest.registration}</div></div>` : ""}
           </div>
-          <a href="seminars.html?id=${next.id}" class="btn btn-gold btn-arrow">セミナー詳細を見る</a>
+          <a href="seminars.html?id=${latest.id}" class="btn btn-gold btn-arrow">セミナー詳細を見る</a>
         </div>
         <div class="fs-visual">${moonPhasesSVG(200)}</div>`;
     } else {
-      featuredEl.innerHTML = `<div class="empty-state">次回開催セミナーは近日公開予定です。</div>`;
+      featuredEl.innerHTML = `<div class="empty-state">開催実績を準備中です。</div>`;
     }
   }
 
-  // 最新セミナー(直近の過去セミナーを3件)
+  // 最新セミナー(直近3件。上のfeaturedと重複しないよう2件目以降を表示)
   const latestEl = $("#latest-seminars");
   if (latestEl) {
-    latestEl.innerHTML = pastSeminars().slice(0, 3).map(seminarCard).join("");
+    latestEl.innerHTML = pastSeminars().slice(1, 4).map(seminarCard).join("");
   }
 
   // 講師紹介:主宰を横長カードで、ゲスト講師を3カラムで表示(孤立カードを防ぐ)
@@ -391,9 +813,16 @@ function initIndexPage() {
     speakersEl.innerHTML = guestSpeakers().map(speakerCard).join("");
   }
 
+  // 扱ってきたテーマ(実際のセミナーカテゴリから動的に生成)
+  const themesEl = $("#theme-tags");
+  if (themesEl) {
+    const themes = [...new Set(pastSeminars().map(s => s.category))];
+    themesEl.innerHTML = themes.map(t => `<span class="tag gold">${t}</span>`).join("");
+  }
+
   // 実績サマリー(ヒーローは"ダイジェスト"に絞り、詳細は実績バンドに集約)
-  setText("#stat-seminars", "47回+");
-  setText("#stat-since", "2023年〜");
+  setText("#stat-seminars", "50回以上");
+  setText("#stat-since", "2025年2月〜");
 }
 
 function initSeminarsPage() {
@@ -412,22 +841,16 @@ function initSeminarsPage() {
   listView.style.display = "block";
   detailView.style.display = "none";
 
-  const upcoming = upcomingSeminars();
   const regular = regularSeminars();
-  const past = pastSeminars();
+  const highlights = pastSeminars().slice(0, 6); // 代表的な実績(全件はarchive.htmlに掲載)
 
-  const upcomingEl = $("#upcoming-seminars");
-  if (upcomingEl) {
-    const items = [...upcoming, ...regular];
-    upcomingEl.innerHTML = items.length
-      ? items.map(seminarCard).join("")
-      : `<div class="empty-state">現在、募集中のセミナーはありません。次回情報をお待ちください。</div>`;
-  }
+  const regularEl = $("#regular-series");
+  if (regularEl) regularEl.innerHTML = regular.map(seminarCard).join("");
 
   const pastEl = $("#past-seminars-grid");
-  if (pastEl) pastEl.innerHTML = past.map(seminarCard).join("");
+  if (pastEl) pastEl.innerHTML = highlights.map(seminarCard).join("");
 
-  initFilterBar(past);
+  initFilterBar(highlights);
 }
 
 function renderSeminarDetail(seminar, container) {
@@ -441,22 +864,24 @@ function renderSeminarDetail(seminar, container) {
       <a href="seminars.html" class="back-link">スケジュール一覧に戻る</a>
       <div class="detail-hero" style="grid-template-columns: 1fr;">
         <div class="detail-info">
-          <div class="detail-tags">${statusTag(seminar)}${seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+          <div class="detail-tags">${statusTag(seminar)}${episodeTag(seminar)}${(seminar.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}</div>
           <h1>${seminar.title}</h1>
-          <p class="lead">${seminar.desc}</p>
+          ${seminar.subtitle ? `<p class="lead" style="color:var(--c-gold);font-family:var(--f-accent);font-style:italic;">${seminar.subtitle}</p>` : ""}
+          ${seminar.desc ? `<p class="lead">${seminar.desc}</p>` : ""}
           <div class="detail-facts">
-            <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : formatDate(seminar.date)}</div></div>
-            <div class="fact"><div class="label">時間</div><div class="val" style="font-size:16px;">${seminar.time}</div></div>
-            <div class="fact"><div class="label">形式</div><div class="val" style="font-size:16px;">${seminar.format}</div></div>
-            <div class="fact"><div class="label">参加費</div><div class="val" style="font-size:16px;">${seminar.price}</div></div>
+            <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div></div>
+            <div class="fact"><div class="label">形式</div><div class="val" style="font-size:16px;">${seminar.format || "Zoomオンライン開催"}</div></div>
+            ${seminar.registration ? `<div class="fact"><div class="label">参加実績</div><div class="val" style="font-size:16px;">${seminar.registration}</div></div>` : ""}
+            ${(!sp && seminar.guestNote) ? `<div class="fact"><div class="label">登壇</div><div class="val" style="font-size:16px;">${seminar.guestNote}</div></div>` : ""}
           </div>
         </div>
       </div>
       <div style="padding:48px 0;display:grid;grid-template-columns:1fr 300px;gap:56px;">
+        ${seminar.longDesc ? `
         <div class="prose">
           <h2>セミナー概要</h2>
           ${seminar.longDesc.map(p => `<p>${p}</p>`).join("")}
-        </div>
+        </div>` : `<div class="prose"><p style="color:var(--c-gray);">この回の詳細な記録は確認でき次第、追記します。</p></div>`}
         ${sp ? `
         <aside>
           <div class="card speaker-card">
@@ -554,26 +979,100 @@ function renderSpeakerDetail(sp, container) {
     </div>`;
 }
 
-function initArchivePage() {
-  const past = pastSeminars();
-  const timelineEl = $("#archive-timeline");
-  if (timelineEl) {
-    timelineEl.innerHTML = past.map(s => {
-      const sp = getSpeaker(s.speakerId);
-      const d = new Date(s.date + "T00:00:00");
-      return `
-      <div class="timeline-item">
-        <div class="t-year">${d.getFullYear()}</div>
-        <div>
-          <div class="t-date">${formatDate(s.date)} ／ ${sp ? sp.name : ""}</div>
-          <h3><a href="seminars.html?id=${s.id}">${s.title}</a></h3>
-          <p>${s.desc}</p>
-          <div class="t-tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+// 全セミナー記録を開催日の昇順(古い順)に並べる(アーカイブページの「活動履歴」表示用)
+function pastSeminarsChronological() {
+  return [...SEMINARS]
+    .filter(s => s.status === "past")
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+}
+
+// 掲載セミナーの延べセッション数(第1〜8回のようにまとめて記録している回も1件として数える)
+function totalSessionCount() {
+  return SEMINARS
+    .filter(s => s.status === "past")
+    .reduce((sum, s) => sum + (s.sessionCount || 1), 0);
+}
+
+const MONTH_LABEL = ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"];
+
+function timelineItemHTML(s) {
+  const sp = getSpeaker(s.speakerId);
+  const presenterLabel = sp ? sp.name : (s.guestNote || "");
+  return `
+    <div class="timeline-item">
+      <div class="t-year">${episodeLabel(s)}</div>
+      <div>
+        <div class="t-date">${displayDate(s)}${presenterLabel ? ` ／ ${presenterLabel}` : ""}</div>
+        <h3><a href="seminars.html?id=${s.id}">${s.title}</a></h3>
+        ${s.subtitle ? `<p style="color:var(--c-gold);font-size:13.5px;margin-top:-4px;">${s.subtitle}</p>` : ""}
+        ${s.desc ? `<p>${s.desc}</p>` : ""}
+        <div class="t-tags">
+          <span class="tag navy">${s.category}</span>
+          ${(s.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
+          ${s.registration ? `<span class="tag gold">${s.registration}</span>` : ""}
         </div>
-      </div>`;
-    }).join("");
+      </div>
+    </div>`;
+}
+
+function episodeLabel(s) {
+  return s.episode ? `#${s.episode}` : "";
+}
+
+function renderArchiveTimeline(list) {
+  const timelineEl = $("#archive-timeline");
+  if (!timelineEl) return;
+  if (!list.length) {
+    timelineEl.innerHTML = `<div class="empty-state">該当するセミナーがありません。</div>`;
+    return;
   }
-  setText("#archive-count", `${past.length}本`);
+  let html = "";
+  let currentYear = null;
+  const seenMonths = {};
+
+  list.forEach(s => {
+    const d = new Date(s.date + "T00:00:00");
+    const year = d.getFullYear();
+    const monthKey = `${year}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const monthLabel = `${year}年${MONTH_LABEL[d.getMonth()]}`;
+
+    if (year !== currentYear) {
+      if (currentYear !== null) html += `</div></div>`;
+      html += `<div class="archive-year"><div class="archive-year-label">${year}年</div><div class="archive-year-body">`;
+      currentYear = year;
+    }
+    if (!seenMonths[monthKey]) {
+      seenMonths[monthKey] = true;
+      html += `<div class="archive-month-label">${s.dateLabel ? s.dateLabel : monthLabel}</div>`;
+    }
+    html += timelineItemHTML(s);
+  });
+  if (currentYear !== null) html += `</div></div>`;
+  timelineEl.innerHTML = html;
+}
+
+function initArchivePage() {
+  const chronological = pastSeminarsChronological();
+  renderArchiveTimeline(chronological);
+
+  // カテゴリフィルター(該当するテーマのみタイムラインを絞り込む)
+  const bar = $("#category-filter");
+  if (bar) {
+    const categories = ["すべて", ...new Set(chronological.map(s => s.category))];
+    bar.innerHTML = categories.map((c, i) =>
+      `<button class="filter-btn ${i === 0 ? "is-active" : ""}" data-cat="${c}">${c}</button>`
+    ).join("");
+    bar.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      $$(".filter-btn", bar).forEach(b => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const cat = btn.dataset.cat;
+      renderArchiveTimeline(cat === "すべて" ? chronological : chronological.filter(s => s.category === cat));
+    });
+  }
+
+  setText("#archive-count", `${totalSessionCount()}回`);
 }
 
 function setText(sel, text) {
