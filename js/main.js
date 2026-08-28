@@ -157,6 +157,22 @@ const SPEAKERS = [
       { label: "登録実績", val: "40名" }
     ],
     since: "2026"
+  },
+  {
+    id: "hana",
+    name: "hanaさん",
+    role: "西洋占星術師",
+    org: "",
+    tags: ["西洋占星術", "AI", "占星術"],
+    bio: [
+      "西洋占星術を専門とし、YouTubeなどで西洋占星術をわかりやすく解説。寄り添い丁寧な相談対応にも定評がある。",
+      "LUNAチャンネルでは、2025年12月からルナCEOとのコラボレーションで「西洋占星術×AI」セミナーに登壇。LUNAチャンネル初期から関わるコラボ講師の一人。"
+    ],
+    facts: [
+      { label: "登壇", val: "2025/12/16・17" },
+      { label: "テーマ", val: "西洋占星術×AI" }
+    ],
+    since: "2025"
   }
 ];
 
@@ -476,7 +492,7 @@ const SEMINARS = [
     kind: "event",
     episode: 31,
     title: "西洋占星術＋AIコラボセミナー",
-    guestNote: "ゲスト講師:hanaさん(西洋占星術YouTuber・西洋占星術の教室を主催)",
+    speakerId: "hana",
     date: "2025-12-16",
     status: "past",
     category: "AI×占い",
@@ -487,7 +503,7 @@ const SEMINARS = [
     kind: "event",
     episode: 32,
     title: "西洋占星術＋AIコラボセミナー day2",
-    guestNote: "ゲスト講師:hanaさん(西洋占星術YouTuber・西洋占星術の教室を主催)",
+    speakerId: "hana",
     date: "2025-12-17",
     status: "past",
     category: "AI×占い",
