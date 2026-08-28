@@ -70,18 +70,19 @@ const SPEAKERS = [
     since: "2026"
   },
   {
-    id: "shino-aotsuki",
-    name: "蒼月 しの",
-    enName: "Shino Aotsuki",
-    role: "ジョイントセミナー講師",
-    org: "「事実と解釈」講座主宰",
-    tags: ["事実と解釈", "マインドセット", "対話"],
+    id: "aotsuki",
+    name: "碧月さん",
+    photo: "images/aotsuki.webp",
+    role: "心理学・思考整理",
+    org: "",
+    tags: ["アドラー心理学", "心理学", "思考整理"],
     bio: [
-      "「事実と解釈を分けて捉える」という思考法をテーマに、セミナーや講座を展開。物事の捉え方を整理することで、感情に振り回されない意思決定を支援している。",
-      "LUNAチャンネルとはジョイントセミナーという形で協業し、無料Zoomセミナーなどを共同開催している。"
+      "アドラー心理学をはじめ、心理学・幼児教育・障がい児教育などの経験を持つ。算命学やオラクルなどの活動経験も持ち、相談対応やセミナー講師として活動。",
+      "LUNAチャンネルでは、「事実」と「解釈」の思考整理術をテーマに登壇。"
     ],
     facts: [
-      { label: "登壇テーマ", val: "事実と解釈" }
+      { label: "登壇", val: "第46回" },
+      { label: "登録実績", val: "19名" }
     ],
     since: "2026"
   },
@@ -161,6 +162,7 @@ const SPEAKERS = [
   {
     id: "hana",
     name: "hanaさん",
+    photo: "images/hana.jpg",
     role: "西洋占星術師",
     org: "",
     tags: ["西洋占星術", "AI", "占星術"],
@@ -642,7 +644,7 @@ const SEMINARS = [
     kind: "event",
     episode: 46,
     title: "ビジネスも人間関係も劇的に軽くなる「事実」と「解釈」の思考整理術",
-    speakerId: "shino-aotsuki",
+    speakerId: "aotsuki",
     date: "2026-06-25",
     status: "past",
     category: "思考・自己成長",
