@@ -35,6 +35,7 @@ const SPEAKERS = [
     isHost: true,
     name: "ルナCEO",
     enName: "Luna CEO",
+    photo: "images/keita-kikuchi.png",
     role: "LUNAチャンネル代表 / AI×占い×収益化教育",
     org: "合同会社ルナマーケティング 代表",
     tags: ["AI活用", "占い×AI", "収益化教育"],
@@ -193,7 +194,11 @@ const SPEAKERS = [
  * speakerId    : SPEAKERS に登録済みのプロフィールを持つ人物の場合のみ指定(カード上でリンク付きで表示される)
  * guestNote    : プロフィール未掲載のゲスト・元受講生などを紹介する場合のプレーンテキスト(リンクは作らない)
  * registration : 登録・参加人数など確認できている実績数字のみ(不明な回は省略)
- * applyUrl     : 申込ページの実URL(確認できている回のみ。詳細ページに申込ボタンとして表示)
+ * applyUrl     : 申込ページ・Zoom参加URLなど、実際の参加導線URL(確認できている回のみ)
+ * meetingId    : ZoomミーティングID(任意。URLに加えて手動入力用に表示)
+ * passcode     : Zoomパスコード(任意)
+ * time         : 開催時刻の表記(任意、"21:00〜"のような文字列)
+ * highlights   : 「今後のセミナー」カードで見せる魅力・実績の短いポイント(配列。1〜3個程度)
  * desc         : 一覧カード用の短い概要。確認できていない回は省略してタイトルのみ表示する
  * longDesc     : 詳細ページ用の紹介文(配列 = 段落ごと)。確認できていない回は省略可
  *
@@ -213,12 +218,17 @@ const SEMINARS = [
   {
     id: "u2026-08-31",
     kind: "event",
-    title: "セミナー開催予定",
+    title: "最速で豊かさを引き寄せる極意",
     speakerId: "cakeman",
     guestNote: "共同登壇:YOSUGAさん",
     date: "2026-08-31",
+    time: "21:00〜",
     status: "upcoming",
-    category: "その他",
+    category: "スピリチュアル・秘教",
+    highlights: ["Microsoft・Toyotaでのキャリアを持つケーキマン氏が登壇"],
+    applyUrl: "https://us02web.zoom.us/j/83787428798?pwd=NGtmfatzoYupdZgleDOsrqqobuBbiY.1",
+    meetingId: "837 8742 8798",
+    passcode: "637504",
   },
   {
     id: "u2026-09-03",
@@ -229,7 +239,9 @@ const SEMINARS = [
     status: "upcoming",
     category: "コンテンツ制作",
     tags: ["Kindle", "絵本制作", "ポイ活", "転売ノウハウ", "税金", "確定申告"],
+    highlights: ["副業で月10万円超えが当たり前の実績を持つ講師"],
     desc: "Kindle出版・絵本制作・ポイ活・転売ノウハウ・税金/確定申告など、幅広いテーマを扱う予定のセミナー。",
+    applyUrl: "https://protagonist.jp/p/r/vQPcdS5d",
   },
   {
     id: "u2026-09-18",
@@ -239,17 +251,20 @@ const SEMINARS = [
     date: "2026-09-18",
     status: "upcoming",
     category: "マーケティング・集客",
+    highlights: ["累計5,000万円規模の広告運用", "Meta広告による約4万件のリスト獲得", "1回のプロモーションで1,000万円以上の売上"],
     desc: "集客・マーケティングをテーマに、Webマーケティングの実践について扱うセミナー。Meta広告、リストマーケティング、公式LINE集客、プロモーション設計など、竜崎悠さんの専門領域を踏まえた内容。",
     applyUrl: "https://protagonist.jp/p/r/6cnbbtIR",
   },
   {
     id: "u2026-09-24",
     kind: "event",
-    title: "セミナー開催予定",
+    title: "『使っているだけの人』から『AI人材』になるための、たった3つの秘密",
     speakerId: "cakeman",
     date: "2026-09-24",
     status: "upcoming",
-    category: "その他",
+    category: "AI・生成AI",
+    highlights: ["Microsoftでマネージャーを経験", "TOYOTAでPR動画を作成"],
+    applyUrl: "https://protagonist.jp/p/r/a8Q928rJ",
   },
   {
     id: "u2026-10-01",
@@ -258,7 +273,10 @@ const SEMINARS = [
     speakerId: "yasuo-kurihara",
     date: "2026-10-01",
     status: "upcoming",
-    category: "その他",
+    category: "占い",
+    highlights: ["鑑定実績8,000人"],
+    desc: "集客→ヒアリング→鑑定→伝え方→フォロー→リピート→紹介など、占い師の仕事を分解し、どこに価値があるのか、どこを改善すると売上につながるのかを考えるセミナーです。",
+    applyUrl: "https://protagonist.jp/p/r/vKp4wIaU",
   },
 
   /* ---------------------------------------------------------------
@@ -857,6 +875,43 @@ function statusTag(seminar) {
   return `<span class="tag">開催終了</span>`;
 }
 
+// ==== 「今後のセミナー」専用カード ====
+// このHPで最も重要な導線のため、他のセミナーカードより情報量を増やし、
+// 日付→タイトル→講師→魅力(highlights)→概要→参加登録CTA の流れで構成する。
+const WEEKDAY_LABEL = ["日", "月", "火", "水", "木", "金", "土"];
+
+function upcomingSeminarCard(seminar) {
+  const d = new Date(seminar.date + "T00:00:00");
+  const sp = getSpeaker(seminar.speakerId);
+  return `
+  <article class="upcoming-card">
+    <div class="upcoming-date">
+      <div class="month">${d.getMonth() + 1}月</div>
+      <div class="day">${d.getDate()}</div>
+      <div class="weekday">(${WEEKDAY_LABEL[d.getDay()]})</div>
+      ${seminar.time ? `<div class="time">${seminar.time}</div>` : ""}
+    </div>
+    <div class="upcoming-body">
+      ${seminar.tags ? `<div class="tag-row" style="margin-bottom:10px;">${seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>` : ""}
+      <h3><a href="seminars.html?id=${seminar.id}">${seminar.title}</a></h3>
+      <div class="upcoming-presenter">${presenterBlock(seminar)}</div>
+      ${(seminar.highlights && seminar.highlights.length) ? `
+      <ul class="upcoming-highlights">
+        ${seminar.highlights.map(h => `<li>${h}</li>`).join("")}
+      </ul>` : ""}
+      ${seminar.desc ? `<p class="upcoming-desc">${seminar.desc}</p>` : ""}
+      <div class="upcoming-links">
+        <a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy);font-size:13px;">詳細を見る</a>
+      </div>
+    </div>
+    <div class="upcoming-cta">
+      ${seminar.applyUrl
+        ? `<a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow">参加登録はこちら</a>`
+        : `<span class="tag" style="white-space:nowrap;">申込準備中</span>`}
+    </div>
+  </article>`;
+}
+
 function seminarCard(seminar) {
   return `
   <article class="card seminar-card">
@@ -876,7 +931,6 @@ function seminarCard(seminar) {
   </article>`;
 }
 
-// 写真枠の中身:photoフィールドがあれば画像、なければイニシャル文字
 // 写真枠の中身:photoフィールドがあれば画像、なければイニシャル文字
 // photoFit / photoPosition で講師ごとに object-fit / object-position を指定可能
 // (既定は "contain" = トリミングなし全体表示。人物写真で顔を大きく見せたい場合は
@@ -923,6 +977,15 @@ function speakerCard(sp) {
    ============================================================== */
 
 function initIndexPage() {
+  // 今後のセミナー(このHPで最も重要な導線。参加登録への動線を主役として見せる)
+  const upcomingEl = $("#upcoming-seminars-top");
+  if (upcomingEl) {
+    const upcoming = upcomingSeminars();
+    upcomingEl.innerHTML = upcoming.length
+      ? upcoming.map(upcomingSeminarCard).join("")
+      : `<div class="empty-state">現在、確定している開催予定はありません。</div>`;
+  }
+
   // 直近の開催実績(このサイトは実績紹介が目的のため、"申込"ではなく"直近の記録"を見せる)
   const latest = latestSeminar();
   const featuredEl = $("#featured-seminar");
@@ -1000,7 +1063,7 @@ function initSeminarsPage() {
   const upcomingEl = $("#upcoming-seminars");
   if (upcomingEl) {
     upcomingEl.innerHTML = upcoming.length
-      ? upcoming.map(seminarCard).join("")
+      ? upcoming.map(upcomingSeminarCard).join("")
       : `<div class="empty-state">現在、確定している開催予定はありません。</div>`;
   }
 
@@ -1027,8 +1090,15 @@ function renderSeminarDetail(seminar, container) {
           <div class="detail-tags">${statusTag(seminar)}${episodeTag(seminar)}${(seminar.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}</div>
           <h1>${seminar.title}</h1>
           ${seminar.subtitle ? `<p class="lead" style="color:var(--c-gold);font-family:var(--f-accent);font-style:italic;">${seminar.subtitle}</p>` : ""}
+          ${(seminar.highlights && seminar.highlights.length) ? `
+          <ul class="upcoming-highlights" style="margin-bottom:20px;">
+            ${seminar.highlights.map(h => `<li>${h}</li>`).join("")}
+          </ul>` : ""}
           ${seminar.desc ? `<p class="lead">${seminar.desc}</p>` : ""}
-          ${(seminar.applyUrl && seminar.status === "upcoming") ? `<a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:28px;">お申し込みはこちら</a>` : ""}
+          ${(seminar.applyUrl && seminar.status === "upcoming") ? `
+          <a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:12px;">参加登録はこちら</a>
+          ${(seminar.meetingId || seminar.passcode) ? `<p style="color:var(--c-gray);font-size:12.5px;margin-bottom:28px;">${seminar.meetingId ? `ミーティングID:${seminar.meetingId}　` : ""}${seminar.passcode ? `パスコード:${seminar.passcode}` : ""}</p>` : `<div style="margin-bottom:28px;"></div>`}
+          ` : ""}
           <div class="detail-facts">
             <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div></div>
             <div class="fact"><div class="label">形式</div><div class="val" style="font-size:16px;">${seminar.format || "Zoomオンライン開催"}</div></div>
@@ -1042,7 +1112,7 @@ function renderSeminarDetail(seminar, container) {
         <div class="prose">
           <h2>セミナー概要</h2>
           ${seminar.longDesc.map(p => `<p>${p}</p>`).join("")}
-        </div>` : `<div class="prose"><p style="color:var(--c-gray);">この回の詳細な記録は確認でき次第、追記します。</p></div>`}
+        </div>` : (seminar.status === "upcoming" ? "<div></div>" : `<div class="prose"><p style="color:var(--c-gray);">この回の詳細な記録は確認でき次第、追記します。</p></div>`)}
         ${sp ? `
         <aside>
           <div class="card speaker-card">
