@@ -497,6 +497,34 @@ section{ padding: var(--section-y) 0; }
   gap:8px;
 }
 
+/* ---- 主宰講師(ホスト)を目立たせる横長カード ---- */
+.speaker-featured{
+  display:grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  background: var(--c-white);
+  border: 1px solid var(--c-line);
+  margin-bottom: 32px;
+}
+.speaker-featured .sf-photo{
+  aspect-ratio: 4/5;
+  background: linear-gradient(160deg, var(--c-navy-soft), var(--c-navy));
+  display:flex; align-items:center; justify-content:center;
+}
+.speaker-featured .sf-photo .initial{ font-family: var(--f-accent); font-size: 40px; color: var(--c-gold-light); }
+.speaker-featured .sf-body{ padding: 28px 28px 28px 0; display:flex; flex-direction:column; justify-content:center; }
+.speaker-featured .sf-role{ font-size:12px; color:var(--c-gold); letter-spacing:.05em; margin-bottom:10px; }
+.speaker-featured h3{ font-size:22px; margin-bottom:10px; }
+.speaker-featured p{ color:var(--c-gray); font-size:14px; max-width:520px; }
+.speaker-featured .link-row{ margin-top:16px; font-size:13.5px; color:var(--c-navy); }
+.guest-label{ font-size:12.5px; letter-spacing:.06em; color:var(--c-gray); margin: 40px 0 16px; }
+
+@media (max-width: 640px){
+  .speaker-featured{ grid-template-columns: 1fr; }
+  .speaker-featured .sf-photo{ max-width: 200px; margin:0 auto; }
+  .speaker-featured .sf-body{ padding: 20px; text-align:left; }
+}
+
 /* ============================================================
    Stats band
    ============================================================ */
@@ -706,6 +734,15 @@ section{ padding: var(--section-y) 0; }
 .back-link:hover{ color: var(--c-gold); }
 .back-link::before{ content:"←"; }
 
+/* 未確定(プレースホルダー)のセミナーカード。実データと混同されないよう明示的に弱める */
+.seminar-card.is-draft{
+  border-style: dashed;
+  border-color: var(--c-gray-light);
+  background: repeating-linear-gradient(135deg, var(--c-white), var(--c-white) 10px, #FBFAF7 10px, #FBFAF7 20px);
+}
+.seminar-card.is-draft h3{ color: var(--c-gray); font-style: italic; }
+.seminar-card.is-draft .desc{ color: var(--c-gray-light); }
+
 .empty-state{
   padding: 64px 24px;
   text-align:center;
@@ -734,10 +771,11 @@ section{ padding: var(--section-y) 0; }
    ============================================================ */
 @media (max-width: 960px){
   .hero .container{ grid-template-columns: 1fr; }
-  .hero-visual{ max-width: 320px; margin: 0 auto; order:-1; }
+  /* 情報(コピー)を先に、装飾ビジュアルは後に表示する(順序は入れ替えない) */
+  .hero-visual{ max-width: 220px; margin: 32px auto 0; }
   .grid-3{ grid-template-columns: repeat(2,1fr); }
   .featured-seminar{ grid-template-columns: 1fr; }
-  .featured-seminar .fs-visual{ min-height:180px; order:-1; }
+  .featured-seminar .fs-visual{ min-height:120px; padding: 24px 0; }
   .stat-band{ grid-template-columns: repeat(2,1fr); }
   .stat-band .stat:nth-child(2){ border-right:none; }
   .channel-grid{ grid-template-columns: 1fr; }
@@ -751,13 +789,20 @@ section{ padding: var(--section-y) 0; }
   .nav-desktop{ display:none; }
   .nav-toggle{ display:flex; }
   .nav-mobile{ display:block; }
-  .nav-cta{ display:none; }
+  /* CTAを消さず、小型ボタンとして常時表示する(主要導線をゼロにしない) */
+  .nav-cta{ padding: 9px 14px; font-size: 12px; white-space:nowrap; }
+  .brand-jp{ display:none; } /* 幅確保のため、CTAと両立できないときはブランド副表記を省略 */
+  .site-header .container{ gap: 10px; }
+  .hero-visual{ display:none; } /* 情報量重視。装飾は非表示にして本文を優先 */
   .grid-3, .grid-2{ grid-template-columns: 1fr; }
   .hero-stats{ gap: 24px; flex-wrap:wrap; }
   .footer-top{ flex-direction:column; }
   .timeline::before{ left: 54px; }
   .timeline-item{ grid-template-columns: 54px 1fr; gap:18px; }
   .timeline-item .t-year::after{ right:-31px; }
+  .company-table th{ display:block; width:auto; padding-bottom:2px; color:var(--c-gold); font-size:12px; letter-spacing:.04em; }
+  .company-table td{ display:block; padding-top:0; padding-bottom:16px; word-break: break-word; }
+  .company-table tr{ display:block; padding: 4px 0; }
 }
 
 @media (prefers-reduced-motion: reduce){
