@@ -54,12 +54,14 @@ const SPEAKERS = [
     id: "cakeman",
     name: "ケーキマン",
     enName: "Cakeman",
-    role: "月例ゲスト講師 / ITコンサルタント",
+    alias: "Or Matok／オル・マトク",
+    photo: "images/cakeman.jpg",
+    role: "大手企業でのマネジメント経験と、AI・テクノロジーへの知見を持つ実践型ゲスト講師",
     org: "Microsoft・Toyota出身",
-    tags: ["Claude Code", "AI活用", "ゴールデンドーン"],
+    tags: ["AI・テクノロジー", "ビジネス", "キャリア"],
     bio: [
-      "Microsoft、Toyotaでキャリアを重ねたのち独立。論理と直感の両面からテーマを捉える視点を持ち、企業のIT活用支援や生成AI導入コンサルティングを行っている。",
-      "LUNAチャンネルには月例ゲストとして登壇し、「Claude Code」など実務で使える生成AIの活用法から、138年の歴史を持つ秘密結社ゴールデンドーンの思想を現代の日常に落とし込むテーマまで、幅広いセミナーを手掛けている。"
+      "Microsoftでマネージャーを経験し、TOYOTAではPR動画の制作にも携わった経験を持つ。",
+      "LUNAチャンネルでは、AIをはじめとしたテクノロジー領域に加え、これまでのビジネス・キャリア経験を生かしたテーマで登壇。AIだけに限定せず、企業での経験とテクノロジーの知見を組み合わせた視点から、実践的なテーマを扱うゲスト講師。"
     ],
     facts: [
       { label: "登壇形式", val: "月例ゲスト" },
@@ -85,17 +87,37 @@ const SPEAKERS = [
   },
   {
     id: "yasuo-kurihara",
-    name: "栗原 靖夫",
+    name: "栗原靖夫さん",
     enName: "Yasuo Kurihara",
-    role: "占い×AI講師 / 鑑定士",
-    org: "鑑定実績8,000件超",
-    tags: ["占い", "鑑定", "AI活用"],
+    photo: "images/kurihara.jpg",
+    role: "プロ占い師",
+    org: "",
+    tags: ["占い", "四柱推命", "九星気学", "タロットカード", "易", "占い師としての鑑定", "占い師の仕事設計", "占い師の差別化"],
     bio: [
-      "鑑定実績8,000件を超えるベテラン鑑定士。長年の対面鑑定で培った経験と、AIを組み合わせた新しい鑑定スタイルを提案している。",
-      "LUNAチャンネルとは相互アフィリエイト・ジョイントセミナーという形で継続的に協業している。"
+      "累計8,000人を鑑定してきたプロ占い師。",
+      "占いの実践経験をもとに、占い師の仕事・集客・鑑定のあり方について発信。"
     ],
     facts: [
-      { label: "鑑定実績", val: "8,000件+" }
+      { label: "鑑定実績", val: "累計8,000人" }
+    ],
+    since: "2026"
+  },
+  {
+    id: "nagataki",
+    name: "ながたきさん",
+    photo: "images/nagataki.jpg",
+    role: "Kindle出版・副業",
+    org: "",
+    tags: ["Kindle出版", "副業", "コンテンツ制作", "絵本制作", "ポイ活", "転売", "税金・確定申告"],
+    bio: [
+      "累計23冊を出版し、累計印税654万円を達成したKindle出版の実践者。",
+      "企業・インフルエンサーとのコラボ出版も手掛け、Kindle出版をはじめ、コンテンツ制作や副業について幅広く発信。",
+      "副業で月10万円超えを実現する実践者として、出版を入口としたコンテンツ制作や副業についてLUNAチャンネルで登壇。"
+    ],
+    facts: [
+      { label: "出版実績", val: "累計23冊" },
+      { label: "累計印税", val: "654万円" },
+      { label: "副業実績", val: "月10万円超" }
     ],
     since: "2026"
   }
@@ -136,7 +158,8 @@ const SEMINARS = [
     id: "u2026-08-31",
     kind: "event",
     title: "セミナー開催予定",
-    guestNote: "登壇予定:YOSUGAさん、Or Matok(オル・マトク)さん",
+    speakerId: "cakeman",
+    guestNote: "共同登壇:YOSUGAさん",
     date: "2026-08-31",
     status: "upcoming",
     category: "その他",
@@ -144,11 +167,13 @@ const SEMINARS = [
   {
     id: "u2026-09-03",
     kind: "event",
-    title: "セミナー開催予定",
-    guestNote: "登壇予定:ながたきさん",
+    title: "Kindleセミナー＋副業多数",
+    speakerId: "nagataki",
     date: "2026-09-03",
     status: "upcoming",
-    category: "その他",
+    category: "コンテンツ制作",
+    tags: ["Kindle", "絵本制作", "ポイ活", "転売ノウハウ", "税金", "確定申告"],
+    desc: "Kindle出版・絵本制作・ポイ活・転売ノウハウ・税金/確定申告など、幅広いテーマを扱う予定のセミナー。",
   },
   {
     id: "u2026-09-18",
@@ -171,7 +196,7 @@ const SEMINARS = [
   {
     id: "u2026-10-01",
     kind: "event",
-    title: "セミナー開催予定",
+    title: "占い師の仕事を全部分解してみる",
     speakerId: "yasuo-kurihara",
     date: "2026-10-01",
     status: "upcoming",
@@ -594,7 +619,7 @@ const SEMINARS = [
     kind: "event",
     episode: 49,
     title: "夢の印税生活を目指しませんか?Kindle作家デビュー入門",
-    guestNote: "ゲスト:ながたきさん(副業でKindle最高月収20万円以上)",
+    speakerId: "nagataki",
     date: "2026-07-16",
     status: "past",
     category: "コンテンツ制作",
@@ -611,7 +636,7 @@ const SEMINARS = [
     category: "スピリチュアル・秘教",
     registration: "参加者約17名",
     longDesc: [
-      "講師はYOSUGAさん、Or Matok(オル・マトク／אור מתוק)さん。ゲストとして、Microsoft・Toyotaでのキャリアを持つケーキマン氏を迎えて開催。",
+      "講師はYOSUGAさん、そしてOr Matok(オル・マトク)名義でも登壇するケーキマン氏(Microsoft・Toyotaでのキャリアを持つ)。",
       "ゴールデンドーンの基礎、引き寄せ、タロット、数秘術、五芒星・六芒星、天使召喚、日常に隠された暗号などを、キャリア・人間関係・資産形成・目標達成といった実生活の視点とあわせて紹介した。",
       "論理と直感の両立という観点から、138年の歴史を持つ秘密結社の奥義を現代的に解説する内容となった。",
     ],
@@ -641,7 +666,7 @@ const SEMINARS = [
     status: "past",
     category: "スピリチュアル・秘教",
     longDesc: [
-      "講師はYOSUGAさん、Or Matok(オル・マトク／אור מתוק)さん。第2回で紹介したゴールデンドーンの思想・体系を、現代の日常生活でどのように活用できるかを考える実践編として開催。",
+      "講師はYOSUGAさん、そしてOr Matok(オル・マトク)名義でも登壇するケーキマン氏。第2回で紹介したゴールデンドーンの思想・体系を、現代の日常生活でどのように活用できるかを考える実践編として開催。",
       "ニオフィト儀式を題材に、時間帯・意識・イメージ・簡略化・日常への応用を紹介したほか、4・13・11・16・24・88といった数字を日付や行動、目標設定にどう活かすかを扱った。",
       "紙とボールペンを使った自己観察の方法や、ゴールデンドーンに関する英語・ヘブライ語・象徴的資料をAIで研究・整理する「解読補助」としてのAI活用法も紹介した。",
     ],
@@ -762,9 +787,10 @@ function episodeTag(seminar) {
 // 登壇者表示:プロフィールがある人(SPEAKERS)はリンク付きチップ、
 // プロフィールのない人はプレーンテキスト(guestNote)で表示しリンクは作らない
 function presenterBlock(seminar) {
-  if (seminar.speakerId) return speakerChip(seminar.speakerId);
-  if (seminar.guestNote) return `<span class="guest-note">${seminar.guestNote}</span>`;
-  return "";
+  const parts = [];
+  if (seminar.speakerId) parts.push(speakerChip(seminar.speakerId));
+  if (seminar.guestNote) parts.push(`<span class="guest-note">${seminar.guestNote}</span>`);
+  return parts.join(" ");
 }
 
 function statusTag(seminar) {
@@ -792,14 +818,21 @@ function seminarCard(seminar) {
   </article>`;
 }
 
+// 写真枠の中身:photoフィールドがあれば画像、なければイニシャル文字
+function speakerPhotoInner(sp) {
+  return sp.photo
+    ? `<img src="${sp.photo}" alt="${sp.name}" loading="lazy">`
+    : `<span class="initial">${speakerInitial(sp.name)}</span>`;
+}
+
 function speakerFeaturedCard(sp) {
   return `
   <article class="speaker-featured">
-    <a href="speakers.html?id=${sp.id}"><div class="sf-photo"><span class="initial">${speakerInitial(sp.name)}</span></div></a>
+    <a href="speakers.html?id=${sp.id}"><div class="sf-photo">${speakerPhotoInner(sp)}</div></a>
     <div class="sf-body">
       <div class="sf-role">主宰 / ${sp.role}</div>
       <h3><a href="speakers.html?id=${sp.id}">${sp.name}</a></h3>
-      <p>${sp.org}</p>
+      ${sp.org ? `<p>${sp.org}</p>` : ""}
       <div class="link-row"><a href="speakers.html?id=${sp.id}" class="btn-arrow" style="color:var(--c-navy)">プロフィールを見る</a></div>
     </div>
   </article>`;
@@ -809,12 +842,12 @@ function speakerCard(sp) {
   return `
   <article class="card speaker-card">
     <a href="speakers.html?id=${sp.id}">
-      <div class="photo"><span class="initial">${speakerInitial(sp.name)}</span></div>
+      <div class="photo">${speakerPhotoInner(sp)}</div>
     </a>
     <div class="body">
       <div class="role">${sp.role}</div>
       <h3><a href="speakers.html?id=${sp.id}">${sp.name}</a></h3>
-      <p>${sp.org}</p>
+      ${sp.org ? `<p>${sp.org}</p>` : ""}
       <div class="link-row">
         <a href="speakers.html?id=${sp.id}" class="btn-arrow">プロフィールを見る</a>
       </div>
@@ -936,7 +969,7 @@ function renderSeminarDetail(seminar, container) {
             <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div></div>
             <div class="fact"><div class="label">形式</div><div class="val" style="font-size:16px;">${seminar.format || "Zoomオンライン開催"}</div></div>
             ${seminar.registration ? `<div class="fact"><div class="label">参加実績</div><div class="val" style="font-size:16px;">${seminar.registration}</div></div>` : ""}
-            ${(!sp && seminar.guestNote) ? `<div class="fact"><div class="label">登壇</div><div class="val" style="font-size:16px;">${seminar.guestNote}</div></div>` : ""}
+            ${seminar.guestNote ? `<div class="fact"><div class="label">${sp ? "共同登壇" : "登壇"}</div><div class="val" style="font-size:16px;">${seminar.guestNote}</div></div>` : ""}
           </div>
         </div>
       </div>
@@ -949,7 +982,7 @@ function renderSeminarDetail(seminar, container) {
         ${sp ? `
         <aside>
           <div class="card speaker-card">
-            <div class="photo"><span class="initial">${speakerInitial(sp.name)}</span></div>
+            <div class="photo">${speakerPhotoInner(sp)}</div>
             <div class="body">
               <div class="role">登壇講師</div>
               <h3><a href="speakers.html?id=${sp.id}">${sp.name}</a></h3>
@@ -1017,11 +1050,12 @@ function renderSpeakerDetail(sp, container) {
     <div class="container">
       <a href="speakers.html" class="back-link">講師一覧に戻る</a>
       <div class="detail-hero">
-        <div class="detail-photo"><span class="initial">${speakerInitial(sp.name)}</span></div>
+        <div class="detail-photo">${speakerPhotoInner(sp)}</div>
         <div class="detail-info">
           <div class="role">${sp.role}</div>
           <h1>${sp.name}</h1>
-          <p class="lead">${sp.org}</p>
+          ${sp.alias ? `<p style="color:var(--c-gray);font-size:13px;margin-top:-14px;margin-bottom:14px;">別名:${sp.alias}</p>` : ""}
+          ${sp.org ? `<p class="lead">${sp.org}</p>` : ""}
           <div class="detail-tags">${sp.tags.map(t => `<span class="tag gold">${t}</span>`).join("")}</div>
           ${sp.facts.length ? `
           <div class="detail-facts">

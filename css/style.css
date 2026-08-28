@@ -367,6 +367,8 @@ section{ padding: var(--section-y) 0; }
 .grid{ display:grid; gap: 28px; }
 .grid-3{ grid-template-columns: repeat(3, 1fr); }
 .grid-2{ grid-template-columns: repeat(2, 1fr); }
+/* 講師カード用:件数が増減しても孤立カードが出ないよう自動折り返し */
+.grid-speakers{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 
 .card{
   background: var(--c-white);
@@ -472,6 +474,13 @@ section{ padding: var(--section-y) 0; }
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
+}
+.speaker-card .photo img{
+  width:100%;
+  height:100%;
+  object-fit: contain;
+  display:block;
 }
 .speaker-card .photo .initial{
   font-family: var(--f-accent);
@@ -510,7 +519,9 @@ section{ padding: var(--section-y) 0; }
   aspect-ratio: 4/5;
   background: linear-gradient(160deg, var(--c-navy-soft), var(--c-navy));
   display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
 }
+.speaker-featured .sf-photo img{ width:100%; height:100%; object-fit:contain; display:block; }
 .speaker-featured .sf-photo .initial{ font-family: var(--f-accent); font-size: 40px; color: var(--c-gold-light); }
 .speaker-featured .sf-body{ padding: 28px 28px 28px 0; display:flex; flex-direction:column; justify-content:center; }
 .speaker-featured .sf-role{ font-size:12px; color:var(--c-gold); letter-spacing:.05em; margin-bottom:10px; }
@@ -737,7 +748,9 @@ section{ padding: var(--section-y) 0; }
   aspect-ratio: 4/5;
   background: linear-gradient(160deg, var(--c-navy-soft), var(--c-navy));
   display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
 }
+.detail-photo img{ width:100%; height:100%; object-fit:contain; display:block; }
 .detail-photo .initial{ font-family: var(--f-accent); color: var(--c-gold-light); font-size: 56px; }
 .detail-info .role{ color: var(--c-gold); font-size:13px; letter-spacing:.05em; margin-bottom:12px; }
 .detail-info h1{ font-size: clamp(28px,3.4vw,38px); margin-bottom: 20px; }
