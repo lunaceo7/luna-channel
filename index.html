@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUNAチャンネル｜専門家と学ぶ、実践型オンラインセミナー</title>
+<meta name="description" content="LUNAチャンネルは、AI活用・占い・収益化教育をテーマに、専門家を招いて実践型のオンラインセミナーを継続開催するメディアブランドです。">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="index">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">LUNA</span><span class="brand-jp">チャンネル</span>
+    </a>
+    <nav class="nav-desktop">
+      <a href="index.html" data-nav="index">トップ</a>
+      <a href="seminars.html" data-nav="seminars">セミナースケジュール</a>
+      <a href="speakers.html" data-nav="speakers">講師一覧</a>
+      <a href="archive.html" data-nav="archive">過去のセミナー</a>
+      <a href="about.html" data-nav="about">LUNAチャンネルについて</a>
+    </nav>
+    <a href="seminars.html" class="nav-cta">セミナーを見る</a>
+    <button class="nav-toggle" aria-label="メニューを開く"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile">
+    <a href="index.html" data-nav="index">トップ</a>
+    <a href="seminars.html" data-nav="seminars">セミナースケジュール</a>
+    <a href="speakers.html" data-nav="speakers">講師一覧</a>
+    <a href="archive.html" data-nav="archive">過去のセミナー</a>
+    <a href="about.html" data-nav="about">LUNAチャンネルについて</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <div class="eyebrow">LUNA CHANNEL</div>
+        <h1>専門家と学ぶ、<br>実践型オンラインセミナー。</h1>
+        <p class="sub">LUNAチャンネルは、AI活用・占い・収益化教育をテーマに、各分野の専門家を招いてオンラインセミナーを継続的に開催しているメディアブランドです。</p>
+        <div class="hero-actions">
+          <a href="seminars.html" class="btn btn-primary btn-arrow">セミナースケジュールを見る</a>
+          <a href="speakers.html" class="btn">講師一覧を見る</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num" id="stat-seminars">—</div><div class="label">セミナー開催実績</div></div>
+          <div class="hero-stat"><div class="num" id="stat-speakers">—</div><div class="label">登壇講師</div></div>
+          <div class="hero-stat"><div class="num" id="stat-students">—</div><div class="label">累計受講生</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="ring"></div>
+        <div class="ring r2"></div>
+        <div class="core"><span>LUNA<br>CHANNEL</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 次回開催セミナー ===== -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Next Session</div>
+        <h2>次回開催セミナー</h2>
+      </div>
+      <div class="featured-seminar" id="featured-seminar"></div>
+    </div>
+  </section>
+
+  <!-- ===== 最新セミナー ===== -->
+  <section>
+    <div class="container">
+      <div class="section-head between">
+        <div>
+          <div class="eyebrow">Latest</div>
+          <h2>最新セミナー</h2>
+        </div>
+        <a href="archive.html" class="btn-arrow" style="color:var(--c-navy);font-size:14px;">過去のセミナーをすべて見る</a>
+      </div>
+      <div class="grid grid-3" id="latest-seminars"></div>
+    </div>
+  </section>
+
+  <!-- ===== 講師紹介 ===== -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="section-head between">
+        <div>
+          <div class="eyebrow">Speakers</div>
+          <h2>登壇講師</h2>
+          <p>各分野の第一線で活動する専門家が、実践的な知見をシェアします。</p>
+        </div>
+        <a href="speakers.html" class="btn-arrow" style="color:var(--c-navy);font-size:14px;">講師一覧をすべて見る</a>
+      </div>
+      <div class="grid grid-3" id="index-speakers"></div>
+    </div>
+  </section>
+
+  <!-- ===== 実績(第三者向け信頼訴求) ===== -->
+  <section class="section-navy">
+    <div class="container">
+      <div class="section-head center" style="margin-bottom:40px;">
+        <div class="eyebrow" style="justify-content:center;">Track Record</div>
+        <h2>継続的な運営実績</h2>
+        <p style="color:rgba(255,255,255,0.6);">LUNAチャンネルは、単発の企画ではなく継続的なセミナー事業として運営しています。</p>
+      </div>
+      <div class="stat-band">
+        <div class="stat"><div class="num" id="">47<span style="font-size:20px;">回+</span></div><div class="label">セミナー開催回数</div></div>
+        <div class="stat"><div class="num" id="stat-courses2">21<span style="font-size:20px;">講座</span></div><div class="label">Udemy公開講座数</div></div>
+        <div class="stat"><div class="num">2,500<span style="font-size:20px;">名+</span></div><div class="label">累計受講生</div></div>
+        <div class="stat"><div class="num">2023<span style="font-size:20px;">年〜</span></div><div class="label">運営継続年数</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== チャンネル導線 ===== -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Channels</div>
+        <h2>LUNAチャンネルをもっと知る</h2>
+      </div>
+      <div class="channel-grid">
+        <div class="channel-card">
+          <div class="icon">Y</div>
+          <h3>YouTube</h3>
+          <p>セミナーのアーカイブやAI活用のノウハウを動画で配信しています。</p>
+          <a href="#" class="btn btn-small">チャンネルを見る</a>
+        </div>
+        <div class="channel-card">
+          <div class="icon">O</div>
+          <h3>オープンチャット</h3>
+          <p>セミナー情報や最新のお知らせをいち早く受け取れる公式コミュニティです。</p>
+          <a href="#" class="btn btn-small">参加する</a>
+        </div>
+        <div class="channel-card">
+          <div class="icon">A</div>
+          <h3>アーカイブ会員</h3>
+          <p>過去のセミナー映像・資料に会員限定でアクセスできるプランです。</p>
+          <a href="#" class="btn btn-small">詳しく見る</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 運営会社情報 ===== -->
+  <section class="section-alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Company</div>
+        <h2>運営会社情報</h2>
+      </div>
+      <div class="company-block">
+        <div>
+          <div class="brand-mark" style="font-size:22px;">LUNA</div>
+          <div class="brand-jp" style="font-size:14px;">チャンネル</div>
+          <p style="color:var(--c-gray);font-size:13.5px;margin-top:16px;">専門家と学ぶ、実践型オンラインセミナー。</p>
+        </div>
+        <table class="company-table">
+          <tr><th>運営会社</th><td>合同会社ルナマーケティング</td></tr>
+          <tr><th>代表者</th><td>菊地 啓太</td></tr>
+          <tr><th>事業内容</th><td>オンラインセミナー運営／AI活用・占い分野の収益化教育／Udemy講座制作／個別コンサルティング</td></tr>
+          <tr><th>設立</th><td>2023年8月</td></tr>
+          <tr><th>所在地</th><td>［所在地をここに入力］</td></tr>
+          <tr><th>お問い合わせ</th><td>［問い合わせ先をここに入力］</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="brand" style="margin-bottom:16px;">
+          <span class="brand-mark" style="color:#fff;">LUNA</span><span class="brand-jp">チャンネル</span>
+        </div>
+        <p style="max-width:280px;font-size:13.5px;">専門家と学ぶ、実践型オンラインセミナー。合同会社ルナマーケティングが運営しています。</p>
+      </div>
+      <div class="footer-nav">
+        <div>
+          <h4>サイトマップ</h4>
+          <a href="index.html">トップページ</a>
+          <a href="seminars.html">セミナースケジュール</a>
+          <a href="speakers.html">講師一覧</a>
+          <a href="archive.html">過去のセミナー</a>
+          <a href="about.html">LUNAチャンネルについて</a>
+        </div>
+        <div>
+          <h4>チャンネル</h4>
+          <a href="#">YouTube</a>
+          <a href="#">オープンチャット</a>
+          <a href="#">アーカイブ会員</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="current-year"></span> 合同会社ルナマーケティング</span>
+      <span>LUNAチャンネル</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

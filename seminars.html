@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セミナースケジュール｜LUNAチャンネル</title>
+<meta name="description" content="LUNAチャンネルが開催するセミナーのスケジュール一覧です。次回開催セミナーとレギュラー開催セミナーをご案内しています。">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="seminars">
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">LUNA</span><span class="brand-jp">チャンネル</span>
+    </a>
+    <nav class="nav-desktop">
+      <a href="index.html" data-nav="index">トップ</a>
+      <a href="seminars.html" data-nav="seminars">セミナースケジュール</a>
+      <a href="speakers.html" data-nav="speakers">講師一覧</a>
+      <a href="archive.html" data-nav="archive">過去のセミナー</a>
+      <a href="about.html" data-nav="about">LUNAチャンネルについて</a>
+    </nav>
+    <a href="seminars.html" class="nav-cta">セミナーを見る</a>
+    <button class="nav-toggle" aria-label="メニューを開く"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="nav-mobile">
+    <a href="index.html" data-nav="index">トップ</a>
+    <a href="seminars.html" data-nav="seminars">セミナースケジュール</a>
+    <a href="speakers.html" data-nav="speakers">講師一覧</a>
+    <a href="archive.html" data-nav="archive">過去のセミナー</a>
+    <a href="about.html" data-nav="about">LUNAチャンネルについて</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== 一覧ビュー ===== -->
+  <div id="seminars-list-view">
+    <section class="page-hero">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">トップ</a> ／ セミナースケジュール</div>
+        <div class="eyebrow">Schedule</div>
+        <h1>セミナースケジュール</h1>
+        <p>次回開催セミナーと、継続開催しているレギュラーセミナーの一覧です。詳細ページでは登壇講師や内容をご確認いただけます。</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head"><h2>開催予定</h2></div>
+        <div class="grid grid-3" id="upcoming-seminars"></div>
+      </div>
+    </section>
+
+    <section class="section-alt">
+      <div class="container">
+        <div class="section-head"><h2>過去のセミナー(一部)</h2><p>全ての過去セミナーは「過去のセミナー」ページでご覧いただけます。</p></div>
+        <div class="filter-bar" id="category-filter"></div>
+        <div class="grid grid-3" id="past-seminars-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== 詳細ビュー(?id=で切り替え) ===== -->
+  <div id="seminars-detail-view" style="display:none;padding-top:48px;"></div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="brand" style="margin-bottom:16px;">
+          <span class="brand-mark" style="color:#fff;">LUNA</span><span class="brand-jp">チャンネル</span>
+        </div>
+        <p style="max-width:280px;font-size:13.5px;">専門家と学ぶ、実践型オンラインセミナー。合同会社ルナマーケティングが運営しています。</p>
+      </div>
+      <div class="footer-nav">
+        <div>
+          <h4>サイトマップ</h4>
+          <a href="index.html">トップページ</a>
+          <a href="seminars.html">セミナースケジュール</a>
+          <a href="speakers.html">講師一覧</a>
+          <a href="archive.html">過去のセミナー</a>
+          <a href="about.html">LUNAチャンネルについて</a>
+        </div>
+        <div>
+          <h4>チャンネル</h4>
+          <a href="#">YouTube</a>
+          <a href="#">オープンチャット</a>
+          <a href="#">アーカイブ会員</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="current-year"></span> 合同会社ルナマーケティング</span>
+      <span>LUNAチャンネル</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
