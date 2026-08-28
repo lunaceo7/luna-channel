@@ -125,6 +125,62 @@ const SPEAKERS = [
  * 推測で埋めず、フィールド自体を省略すること。
  */
 const SEMINARS = [
+  /* ---------------------------------------------------------------
+     開催予定(status: "upcoming")
+     タイトル・概要が確認できていない回は、推測で埋めず
+     「セミナー開催予定」+ guestNote(登壇予定者)のみ表示する。
+     過去実績(status:"past")とは別ブロックとして管理し、
+     pastSeminars() / pastSeminarsChronological() には含まれない。
+     --------------------------------------------------------------- */
+  {
+    id: "u2026-08-31",
+    kind: "event",
+    title: "セミナー開催予定",
+    guestNote: "登壇予定:YOSUGAさん、Or Matok(オル・マトク)さん",
+    date: "2026-08-31",
+    status: "upcoming",
+    category: "その他",
+  },
+  {
+    id: "u2026-09-03",
+    kind: "event",
+    title: "セミナー開催予定",
+    guestNote: "登壇予定:ながたきさん",
+    date: "2026-09-03",
+    status: "upcoming",
+    category: "その他",
+  },
+  {
+    id: "u2026-09-18",
+    kind: "event",
+    title: "セミナー開催予定",
+    guestNote: "登壇予定:竜崎さん",
+    date: "2026-09-18",
+    status: "upcoming",
+    category: "その他",
+  },
+  {
+    id: "u2026-09-24",
+    kind: "event",
+    title: "セミナー開催予定",
+    speakerId: "cakeman",
+    date: "2026-09-24",
+    status: "upcoming",
+    category: "その他",
+  },
+  {
+    id: "u2026-10-01",
+    kind: "event",
+    title: "セミナー開催予定",
+    speakerId: "yasuo-kurihara",
+    date: "2026-10-01",
+    status: "upcoming",
+    category: "その他",
+  },
+
+  /* ---------------------------------------------------------------
+     過去セミナー実績(status: "past")— 第1回〜第49回、2026年7月17日・30日・31日
+     --------------------------------------------------------------- */
   {
     id: "s01-08",
     kind: "event",
@@ -841,8 +897,16 @@ function initSeminarsPage() {
   listView.style.display = "block";
   detailView.style.display = "none";
 
+  const upcoming = upcomingSeminars();
   const regular = regularSeminars();
   const highlights = pastSeminars().slice(0, 6); // 代表的な実績(全件はarchive.htmlに掲載)
+
+  const upcomingEl = $("#upcoming-seminars");
+  if (upcomingEl) {
+    upcomingEl.innerHTML = upcoming.length
+      ? upcoming.map(seminarCard).join("")
+      : `<div class="empty-state">現在、確定している開催予定はありません。</div>`;
+  }
 
   const regularEl = $("#regular-series");
   if (regularEl) regularEl.innerHTML = regular.map(seminarCard).join("");
