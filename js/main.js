@@ -76,9 +76,10 @@ const SPEAKERS = [
     photo: "images/aotsuki.webp",
     role: "心理学・思考整理",
     org: "",
-    tags: ["アドラー心理学", "心理学", "思考整理"],
+    tags: ["アドラー心理学", "心理学", "モンテッソーリ教育", "発達支援", "思考整理"],
     bio: [
-      "アドラー心理学をはじめ、心理学・幼児教育・障がい児教育などの経験を持つ。算命学やオラクルなどの活動経験も持ち、相談対応やセミナー講師として活動。",
+      "アドラー心理学をはじめ、心理学・モンテッソーリ教育・幼児教育・発達支援(療育)などの経験を持つ。算命学やオラクルなどの活動経験も持ち、相談対応やセミナー講師として活動。",
+      "陶芸作家・手織り作家としての表現活動も行っており、その経験を発達支援や幼児教育の現場にも取り入れている。",
       "LUNAチャンネルでは、「事実」と「解釈」の思考整理術をテーマに登壇。"
     ],
     facts: [
@@ -728,6 +729,7 @@ const SEMINARS = [
   {
     id: "golden-dawn-2",
     kind: "event",
+    episode: 50,
     title: "ゴールデンドーン魔術入門 第2回",
     subtitle: "138年の秘密結社の奥義を、元エリートビジネスマンが解説",
     speakerId: "cakeman",
@@ -744,6 +746,7 @@ const SEMINARS = [
   {
     id: "ai-mayoi-graduation",
     kind: "event",
+    episode: 51,
     title: "AI迷子卒業セミナー",
     subtitle: "50代・60代からのAI活用。ChatGPTを「あなたの代わりに働く部下」にする方法",
     speakerId: "cakeman",
@@ -759,6 +762,7 @@ const SEMINARS = [
   {
     id: "golden-dawn-3",
     kind: "event",
+    episode: 52,
     title: "ゴールデンドーン魔術入門 第3回",
     subtitle: "【古代引き寄せ】秘密結社の儀式を今風に転換!実践する4つのステップ",
     speakerId: "cakeman",
@@ -1133,7 +1137,7 @@ function renderSeminarDetail(seminar, container) {
           </div>
         </div>
       </div>
-      <div style="padding:48px 0;display:grid;grid-template-columns:1fr 300px;gap:56px;">
+      <div class="detail-body-grid">
         ${seminar.longDesc ? `
         <div class="prose">
           <h2>セミナー概要</h2>
@@ -1241,7 +1245,7 @@ function renderSpeakerDetail(sp, container) {
 function pastSeminarsChronological() {
   return [...SEMINARS]
     .filter(s => s.status === "past")
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+    .sort((a, b) => new Date(b.date) - new Date(a.date)); // 新しい順(最新が上)
 }
 
 // 掲載セミナーの延べセッション数(第1〜8回のようにまとめて記録している回も1件として数える)
