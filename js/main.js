@@ -195,7 +195,8 @@ const SPEAKERS = [
  * speakerId    : SPEAKERS に登録済みのプロフィールを持つ人物の場合のみ指定(カード上でリンク付きで表示される)
  * guestNote    : プロフィール未掲載のゲスト・元受講生などを紹介する場合のプレーンテキスト(リンクは作らない)
  * registration : 登録・参加人数など確認できている実績数字のみ(不明な回は省略)
- * applyUrl     : 申込ページ・Zoom参加URLなど、実際の参加導線URL(確認できている回のみ)
+ * applyUrl     : 申込ページ・Zoom参加URL・オープンチャットURLなど、実際の参加導線URL(確認できている回のみ)
+ * ctaLabel     : 参加導線ボタンの文言(任意。省略時は既定の「参加登録はこちら」)
  * meetingId    : ZoomミーティングID(任意。URLに加えて手動入力用に表示)
  * passcode     : Zoomパスコード(任意)
  * time         : 開催時刻の表記(任意、"21:00〜"のような文字列)
@@ -219,13 +220,13 @@ const SEMINARS = [
   {
     id: "u2026-08-31",
     kind: "event",
+    episode: 53,
     title: "人生が上手くいくゴールデンドーンの秘儀:第4弾 −五芒星と六芒星−",
     subtitle: "魔法の図形の使い方入門セミナー",
     speakerId: "cakeman",
     guestNote: "共同登壇:YOSUGAさん",
     date: "2026-08-31",
-    time: "21:00〜",
-    status: "upcoming",
+    status: "past",
     category: "スピリチュアル・秘教",
     highlights: ["五芒星・六芒星の意味と使い方を実演つきで解説", "黄金の夜明け団に伝わる伝統的な使い分けを紹介", "知識不要、初心者から参加可能"],
     desc: "五芒星(ペンタグラム)・六芒星(ヘキサグラム)という2つの魔法図形の意味と実践的な使い方を、専門知識不要で学べる入門セミナー。",
@@ -234,28 +235,65 @@ const SEMINARS = [
       "本セミナーでは、専門用語を使わず、五芒星・六芒星それぞれの意味と歴史、星の描き方(描く向きによって意味が変わる点)、日常でできる浄化のワーク、天使の名前と星を組み合わせる伝統的な作法までを、実演を交えて紹介する。",
       "魔術の知識は一切不要。「星のマークが気になる」という好奇心があれば参加できる内容。"
     ],
-    applyUrl: "https://us02web.zoom.us/j/83787428798?pwd=NGtmfatzoYupdZgleDOsrqqobuBbiY.1",
-    meetingId: "837 8742 8798",
-    passcode: "637504",
   },
   {
     id: "u2026-09-03",
     kind: "event",
+    episode: 54,
     title: "Kindleセミナー＋副業多数",
     subtitle: "Kindle出版で年収と実績が変わった",
     speakerId: "nagataki",
     date: "2026-09-03",
-    status: "upcoming",
+    status: "past",
     category: "コンテンツ制作",
     tags: ["Kindle", "絵本制作", "ポイ活", "転売ノウハウ", "税金", "確定申告"],
     highlights: ["累計23冊出版・累計印税654万円", "月最高印税22.7万円", "企業・インフルエンサーとのタイアップ出版多数"],
-    desc: "Kindle出版・絵本制作・ポイ活・転売ノウハウ・税金/確定申告など、幅広いテーマを扱う予定のセミナー。",
+    desc: "Kindle出版・絵本制作・ポイ活・転売ノウハウ・税金/確定申告など、幅広いテーマを扱ったセミナー。",
     longDesc: [
       "Kindle出版業界で知られるながたきさんをゲストに迎え、Kindle出版を入口としたキャリア・副業・収益化の実践方法を解説するセミナー。",
-      "当日は、ながたきさんの実践事例とビジネス戦略の紹介からスタートし、初心者が最初の1冊を出版するまでの流れ、企業タイアップの取り方、月5万円から20万円への段階的な収益化プロセスまでを解説する。後半は質疑応答の時間も設ける。",
+      "当日は、ながたきさんの実践事例とビジネス戦略の紹介からスタートし、初心者が最初の1冊を出版するまでの流れ、企業タイアップの取り方、月5万円から20万円への段階的な収益化プロセスまでを解説した。後半は質疑応答の時間も設けた。",
       "副業で月5万〜20万円の安定収入を作りたい方、Kindle出版に興味がある初心者、企業・インフルエンサーとの仕事に関心がある方などにおすすめの内容。"
     ],
-    applyUrl: "https://protagonist.jp/p/r/vQPcdS5d",
+  },
+  {
+    id: "u2026-09-10",
+    kind: "event",
+    title: "AI迷子セミナー、好評につき追加開催",
+    subtitle: "50代からのAI活用部",
+    speakerId: "cakeman",
+    date: "2026-09-10",
+    time: "21:00〜",
+    status: "upcoming",
+    category: "AI・生成AI",
+    highlights: ["7月開催の「AI迷子向けセミナー」が好評につき追加開催", "事前登録フォームなし。専用オープンチャットに参加するだけでOK", "当日の飛び込み参加も歓迎"],
+    desc: "「AIって聞くけど、結局何から始めればいいの?」という方に向けた、初心者向けのAI活用セミナー。",
+    longDesc: [
+      "「ChatGPTを触ってみたけどうまく使えない」「AIの情報が多すぎて逆に迷子になっている」という方に向けた、初心者向けのAI活用セミナー。7月に開催した回が好評だったため、9月も開催する。",
+      "今回は事前登録フォームはなく、専用オープンチャット「AI迷子から抜け出す会｜50代からのAI活用部」に参加しておけばOK。当日はオープンチャット内でZoom URLが案内される。",
+      "当日の飛び込み参加も歓迎。50代・60代からでも分かるAI活用を、実践形式で伝えていく。"
+    ],
+    applyUrl: "https://line.me/ti/g2/UxC6rsyzWt0Hnn0kgR3mDyTERwpPS09d-BIibg?utm_medium=link_copy&utm_campaign=default&utm_source=chatgpt.com",
+    ctaLabel: "オープンチャットに参加する",
+  },
+  {
+    id: "u2026-09-23",
+    kind: "event",
+    title: "AI迷子セミナー、好評につき追加開催",
+    subtitle: "50代からのAI活用部",
+    speakerId: "cakeman",
+    date: "2026-09-23",
+    time: "21:00〜",
+    status: "upcoming",
+    category: "AI・生成AI",
+    highlights: ["7月開催の「AI迷子向けセミナー」が好評につき追加開催", "事前登録フォームなし。専用オープンチャットに参加するだけでOK", "当日の飛び込み参加も歓迎"],
+    desc: "「AIって聞くけど、結局何から始めればいいの?」という方に向けた、初心者向けのAI活用セミナー。",
+    longDesc: [
+      "「ChatGPTを触ってみたけどうまく使えない」「AIの情報が多すぎて逆に迷子になっている」という方に向けた、初心者向けのAI活用セミナー。7月に開催した回が好評だったため、9月も開催する。",
+      "今回は事前登録フォームはなく、専用オープンチャット「AI迷子から抜け出す会｜50代からのAI活用部」に参加しておけばOK。当日はオープンチャット内でZoom URLが案内される。",
+      "当日の飛び込み参加も歓迎。50代・60代からでも分かるAI活用を、実践形式で伝えていく。"
+    ],
+    applyUrl: "https://line.me/ti/g2/UxC6rsyzWt0Hnn0kgR3mDyTERwpPS09d-BIibg?utm_medium=link_copy&utm_campaign=default&utm_source=chatgpt.com",
+    ctaLabel: "オープンチャットに参加する",
   },
   {
     id: "u2026-09-18",
@@ -934,7 +972,7 @@ function upcomingSeminarCard(seminar) {
     </div>
     <div class="upcoming-cta">
       ${seminar.applyUrl
-        ? `<a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow">参加登録はこちら</a>`
+        ? `<a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow">${seminar.ctaLabel || "参加登録はこちら"}</a>`
         : `<span class="tag" style="white-space:nowrap;">申込準備中</span>`}
     </div>
   </article>`;
@@ -1126,7 +1164,7 @@ function renderSeminarDetail(seminar, container) {
           </ul>` : ""}
           ${seminar.desc ? `<p class="lead">${seminar.desc}</p>` : ""}
           ${(seminar.applyUrl && seminar.status === "upcoming") ? `
-          <a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:12px;">参加登録はこちら</a>
+          <a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:12px;">${seminar.ctaLabel || "参加登録はこちら"}</a>
           ${(seminar.meetingId || seminar.passcode) ? `<p style="color:var(--c-gray);font-size:12.5px;margin-bottom:28px;">${seminar.meetingId ? `ミーティングID:${seminar.meetingId}　` : ""}${seminar.passcode ? `パスコード:${seminar.passcode}` : ""}</p>` : `<div style="margin-bottom:28px;"></div>`}
           ` : ""}
           <div class="detail-facts">
