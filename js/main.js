@@ -210,6 +210,43 @@ const SPEAKERS = [
  * 推測で埋めず、フィールド自体を省略すること。
  */
 const SEMINARS = [
+  // Peatix主催者メールで確認した直近の開催予定
+  {
+    id: "u2026-10-30-peatix",
+    kind: "event",
+    title: "ゼロから始められる 集客・マーケティング実践講座",
+    date: "2026-10-30",
+    time: "20:00〜",
+    status: "upcoming",
+    category: "マーケティング・集客",
+    applyUrl: "https://peatix.com/event/5194498",
+    ctaLabel: "Peatixで詳細・申込を確認",
+    desc: "Peatix主催者通知で掲載と開催日時を確認。申込状況はPeatixでご確認ください。"
+  },
+  {
+    id: "u2026-10-31-codex",
+    kind: "event",
+    title: "AI初心者必見！自作WEBサイト・ツール制作を1時間で完全解説！【Codex】",
+    date: "2026-10-31",
+    time: "20:00〜",
+    status: "upcoming",
+    category: "AI・生成AI",
+    applyUrl: "https://peatix.com/event/5228038",
+    ctaLabel: "Peatixで詳細・申込を確認",
+    desc: "Peatix主催者通知で掲載と開催日時を確認。申込状況はPeatixでご確認ください。"
+  },
+  {
+    id: "u2026-11-05-brand",
+    kind: "event",
+    title: "なぜ、あの会社は選ばれるのか？ 自社ならではの価値を見つけるブランド戦略",
+    date: "2026-11-05",
+    time: "20:00〜",
+    status: "upcoming",
+    category: "ブランディング",
+    applyUrl: "https://peatix.com/event/5194612",
+    ctaLabel: "Peatixで詳細・申込を確認",
+    desc: "Peatix主催者通知で掲載と開催日時を確認。申込状況はPeatixでご確認ください。"
+  },
   // Zoom My Notesの文字起こしに基づく開催確認済み記録
   {
     id: "s2026-10-15-voice",
