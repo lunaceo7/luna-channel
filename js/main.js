@@ -1127,10 +1127,14 @@ function initIndexPage() {
     }
   }
 
-  // 最新セミナー(直近3件。上のfeaturedと重複しないよう2件目以降を表示)
+  // 最新セミナー：JST今日以降の確定開催予定を開催日が近い順に最大3件表示。
+  // 過去の開催実績は別欄にのみ表示する。
   const latestEl = $("#latest-seminars");
   if (latestEl) {
-    latestEl.innerHTML = pastSeminars().slice(1, 4).map(seminarCard).join("");
+    const upcomingLatest = upcomingSeminars().sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3);
+    latestEl.innerHTML = upcomingLatest.length
+      ? upcomingLatest.map(seminarCard).join("")
+      : `<div class="empty-state">現在、確定している今後のセミナーはありません。</div>`;
   }
 
   // 講師紹介:主宰を横長カードで、ゲスト講師を3カラムで表示(孤立カードを防ぐ)
