@@ -210,6 +210,18 @@ const SPEAKERS = [
  * 推測で埋めず、フィールド自体を省略すること。
  */
 const SEMINARS = [
+  // Zoom My Notesの文字起こしに基づく開催確認済み記録
+  {
+    id: "s2026-10-15-voice",
+    kind: "event",
+    title: "年収を2倍にするモテ声！ビジネスボイトレセミナー",
+    date: "2026-10-15",
+    status: "past",
+    category: "ビジネス・コミュニケーション",
+    guestNote: "毛利大介さん（ビジネスボイストレーナー）",
+    desc: "発声・共鳴・滑舌・表現力について学んだオンラインセミナー。Zoom会議と文字起こしで開催を確認。",
+    longDesc: ["声の共鳴、滑舌、抑揚や間などを扱い、ビジネスにおける伝わり方や印象を改善する方法を学びました。"]
+  },
   /* ---------------------------------------------------------------
      開催予定(status: "upcoming")
      タイトル・概要が確認できていない回は、推測で埋めず
@@ -865,7 +877,7 @@ function sortedSeminars() {
 }
 
 function upcomingSeminars() {
-  return sortedSeminars().filter(s => s.status === "upcoming");
+  return sortedSeminars().filter(s => s.status === "upcoming" && s.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"}));
 }
 
 function pastSeminars() {
@@ -936,7 +948,7 @@ function presenterBlock(seminar) {
 }
 
 function statusTag(seminar) {
-  if (seminar.status === "upcoming") return `<span class="tag gold">次回開催</span>`;
+  if (seminar.status === "upcoming") return seminar.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"}) ? `<span class="tag gold">次回開催</span>` : `<span class="tag">開催状況確認中</span>`;
   if (seminar.status === "regular") return `<span class="tag navy">レギュラー開催</span>`;
   return `<span class="tag">開催終了</span>`;
 }
@@ -1163,7 +1175,7 @@ function renderSeminarDetail(seminar, container) {
             ${seminar.highlights.map(h => `<li>${h}</li>`).join("")}
           </ul>` : ""}
           ${seminar.desc ? `<p class="lead">${seminar.desc}</p>` : ""}
-          ${(seminar.applyUrl && seminar.status === "upcoming") ? `
+          ${(seminar.applyUrl && seminar.status === "upcoming" && seminar.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"})) ? `
           <a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:12px;">${seminar.ctaLabel || "参加登録はこちら"}</a>
           ${(seminar.meetingId || seminar.passcode) ? `<p style="color:var(--c-gray);font-size:12.5px;margin-bottom:28px;">${seminar.meetingId ? `ミーティングID:${seminar.meetingId}　` : ""}${seminar.passcode ? `パスコード:${seminar.passcode}` : ""}</p>` : `<div style="margin-bottom:28px;"></div>`}
           ` : ""}
