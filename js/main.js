@@ -268,11 +268,14 @@ const SEMINARS = [
     title: "ゼロから始められる 集客・マーケティング実践講座",
     date: "2026-10-30",
     time: "20:00〜",
-    status: "upcoming",
+    status: "past",
     category: "マーケティング・集客",
     applyUrl: "https://peatix.com/event/5194498",
     ctaLabel: "Peatixで詳細・申込を確認",
-    desc: "Peatix主催者通知で掲載と開催日時を確認。申込状況はPeatixでご確認ください。"
+    speakerId: "ryuzaki",
+    guestNote: "ルナCEO",
+    desc: "いい商品なのに、なぜ伝わらない？ お客様との出会い方から、価値の届け方まで。竜崎悠さんとルナCEOが、参加者の問いを手がかりに掘り下げた実践講座です。",
+    longDesc: ["商品をもっとよくすれば売れるはず。そう考えて頑張っているのに、お客様との接点が増えない。そのとき、どこを見直すとよいのでしょうか。", "この回では、集客から販売までのつながりを振り返りながら、出会いを仕事につなげる考え方や、自分の価値を伝える工夫を掘り下げました。竜崎悠さんの解説にルナCEOの営業経験が重なり、チャットの問いから話が広がっていく時間に。", "『自分の仕事なら、どう考える？』と置き換えながら聞きたくなる回。後半には、マーケティングとAIエージェントを組み合わせる次の企画にも話が及びました。"]
   },
   {
     id: "u2026-10-31-codex",
@@ -292,11 +295,13 @@ const SEMINARS = [
     title: "なぜ、あの会社は選ばれるのか？ 自社ならではの価値を見つけるブランド戦略",
     date: "2026-11-05",
     time: "20:00〜",
-    status: "upcoming",
+    status: "past",
     category: "ブランディング",
     applyUrl: "https://peatix.com/event/5194612",
     ctaLabel: "Peatixで詳細・申込を確認",
-    desc: "Peatix主催者通知で掲載と開催日時を確認。申込状況はPeatixでご確認ください。"
+    guestNote: "山崎さん（ブランドコンサルタント）",
+    desc: "『あなたの強みは？』に、ありきたりな言葉しか出てこない。そんなとき、自分では当たり前の経験に価値が隠れているかもしれません。ワークを交えて『選ばれる理由』を考えた回です。",
+    longDesc: ["『丁寧に対応します』『経験があります』。それは確かに強み。でも、ほかの人も同じことを伝えていたら、何が選ばれる理由になるのでしょうか。", "ブランドコンサルタントの山崎さんを迎え、会社にも個人にも通じるブランドづくりを考えました。お客様の課題、自分の強みや弱み、競合との違いをワークで言葉にし、参加者の考えも聞きながら視点を広げていきました。", "自分では弱みだと思っていたことも、見方が変わると別の意味を持つかもしれない。きれいなキャッチコピーの前に、自分の価値と向き合いたくなる時間でした。"]
   },
   // Zoom My Notesの文字起こしに基づく開催確認済み記録
   {
@@ -307,8 +312,8 @@ const SEMINARS = [
     status: "past",
     category: "ビジネス・コミュニケーション",
     guestNote: "毛利大介さん（ビジネスボイストレーナー）",
-    desc: "発声・共鳴・滑舌・表現力について学んだオンラインセミナー。Zoom会議と文字起こしで開催を確認。",
-    longDesc: ["声の共鳴、滑舌、抑揚や間などを扱い、ビジネスにおける伝わり方や印象を改善する方法を学びました。"]
+    desc: "同じ言葉でも、『この人にお願いしたい』と思われる声は何が違う？ 声の響き・滑舌・表現を、講師の実演とともに見つめ直した一回です。",
+    longDesc: ["話す内容は準備していても、声そのものを練習する機会は意外と少ないもの。聞き返されやすい、頼りなく聞こえる、自分の声が好きになれない。そんな身近な悩みから始まったセミナーです。", "ビジネスボイストレーナーの毛利大介さんが、その場で声を使い分けながら、響き・滑舌・表現の違いを紹介。声を出して確かめる場面もあり、説明を読むだけではつかみにくい『聞こえ方の差』に触れました。", "話し方を見直すと、次の自己紹介やオンライン面談はどう変わるだろう。自分の声で試してみたくなる、実演中心の時間でした。"]
   },
   /* ---------------------------------------------------------------
      開催予定(status: "upcoming")
@@ -346,14 +351,9 @@ const SEMINARS = [
     date: "2026-09-03",
     status: "past",
     category: "コンテンツ制作",
-    tags: ["Kindle", "絵本制作", "ポイ活", "転売ノウハウ", "税金", "確定申告"],
-    highlights: ["累計23冊出版・累計印税654万円", "月最高印税22.7万円", "企業・インフルエンサーとのタイアップ出版多数"],
-    desc: "Kindle出版・絵本制作・ポイ活・転売ノウハウ・税金/確定申告など、幅広いテーマを扱ったセミナー。",
-    longDesc: [
-      "Kindle出版業界で知られるながたきさんをゲストに迎え、Kindle出版を入口としたキャリア・副業・収益化の実践方法を解説するセミナー。",
-      "当日は、ながたきさんの実践事例とビジネス戦略の紹介からスタートし、初心者が最初の1冊を出版するまでの流れ、企業タイアップの取り方、月5万円から20万円への段階的な収益化プロセスまでを解説した。後半は質疑応答の時間も設けた。",
-      "副業で月5万〜20万円の安定収入を作りたい方、Kindle出版に興味がある初心者、企業・インフルエンサーとの仕事に関心がある方などにおすすめの内容。"
-    ],
+    tags: ["Kindle", "経験を本に", "仕事への広がり"],
+    desc: "『本にできるほどの経験なんてない』と思っていませんか？ ながたきさんが語ったのは、最初の一冊と、その先に広がる仕事や出会い。出版を見る目が少し変わるセミナーでした。",
+    longDesc: ["本を出すのは、特別な実績のある人だけ？ 自分の仕事や日々の経験に、誰かが読みたいテーマがあるとしたら。そんな問いから聞きたくなるKindle出版の回です。", "ながたきさんは、電子書籍と紙の本の違いから、出版経験が制作代行や新しい仕事につながった実例まで紹介。印税だけでは語れない『一冊を持つ意味』を、ルナCEOとの対話を交えて掘り下げました。", "本を出した後、どんな人とつながり、何に挑戦できるのか。自分なら何を書くだろう、と次の一冊を想像したくなる時間でした。"]
   },
   {
     id: "u2026-09-10",
@@ -1059,7 +1059,7 @@ function upcomingSeminarCard(seminar) {
     </div>
     <div class="upcoming-body">
       ${seminar.tags ? `<div class="tag-row" style="margin-bottom:10px;">${seminar.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>` : ""}
-      <h3><a href="seminars.html?id=${seminar.id}">${seminar.title}</a></h3>
+      <h3><a href="${seminarLink(seminar)}">${seminar.title}</a></h3>
       <div class="upcoming-presenter">${presenterBlock(seminar)}</div>
       ${(seminar.highlights && seminar.highlights.length) ? `
       <ul class="upcoming-highlights">
@@ -1067,7 +1067,7 @@ function upcomingSeminarCard(seminar) {
       </ul>` : ""}
       ${seminar.desc ? `<p class="upcoming-desc">${seminar.desc}</p>` : ""}
       <div class="upcoming-links">
-        <a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy);font-size:13px;">詳細を見る</a>
+        <a href="${seminarLink(seminar)}" class="btn-arrow" style="color:var(--c-navy);font-size:13px;">${seminar.status === "upcoming" && seminar.applyUrl ? "詳細・申込へ" : "紹介を読む"}</a>
       </div>
     </div>
     <div class="upcoming-cta">
@@ -1076,6 +1076,10 @@ function upcomingSeminarCard(seminar) {
         : `<span class="tag" style="white-space:nowrap;">申込準備中</span>`}
     </div>
   </article>`;
+}
+
+function seminarLink(seminar) {
+  return seminar.status === "upcoming" && seminar.applyUrl && seminar.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"}) ? seminar.applyUrl : `seminars.html?id=${seminar.id}`;
 }
 
 function seminarCard(seminar) {
@@ -1087,12 +1091,12 @@ function seminarCard(seminar) {
       ${(seminar.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
     </div>
     <div class="date">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div>
-    <h3><a href="seminars.html?id=${seminar.id}">${seminar.title}</a></h3>
+    <h3><a href="${seminarLink(seminar)}">${seminar.title}</a></h3>
     ${seminar.desc ? `<p class="desc">${seminar.desc}</p>` : ""}
     ${seminar.registration ? `<div class="tag gold" style="margin-top:10px;display:inline-block;">${seminar.registration}</div>` : ""}
     <div class="meta">
       ${presenterBlock(seminar)}
-      <a href="seminars.html?id=${seminar.id}" class="btn-arrow" style="color:var(--c-navy);margin-left:auto;">詳細を見る</a>
+      <a href="${seminarLink(seminar)}" class="btn-arrow" style="color:var(--c-navy);margin-left:auto;">${seminar.status === "upcoming" && seminar.applyUrl ? "詳細・申込へ" : "紹介を読む"}</a>
     </div>
   </article>`;
 }
@@ -1256,7 +1260,7 @@ function renderSeminarDetail(seminar, container) {
   const sp = getSpeaker(seminar.speakerId);
   container.innerHTML = `
     <div class="container">
-      <a href="seminars.html" class="back-link">スケジュール一覧に戻る</a>
+      <a href="${seminar.status === "past" ? "archive.html" : "seminars.html"}" class="back-link">${seminar.status === "past" ? "過去の開催に戻る" : "開催予定に戻る"}</a>
       <div class="detail-hero" style="grid-template-columns: 1fr;">
         <div class="detail-info">
           <div class="detail-tags">${statusTag(seminar)}${episodeTag(seminar)}${(seminar.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}</div>
@@ -1282,8 +1286,9 @@ function renderSeminarDetail(seminar, container) {
       <div class="detail-body-grid">
         ${seminar.longDesc ? `
         <div class="prose">
-          <h2>セミナー概要</h2>
+          <h2>${seminar.status === "past" ? "この回で出会えた学び" : "セミナー概要"}</h2>
           ${seminar.longDesc.map(p => `<p>${p}</p>`).join("")}
+          ${seminar.status === "past" && upcomingSeminars()[0]?.applyUrl ? `<div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--c-line)"><p>次は、あなたも学びの輪へ。</p><a class="btn btn-primary" href="${upcomingSeminars()[0].applyUrl}">次回の詳細・申込（Peatix） →</a></div>` : ""}
         </div>` : (seminar.status === "upcoming" ? "<div></div>" : `<div class="prose"><p style="color:var(--c-gray);">この回の詳細な記録は確認でき次第、追記します。</p></div>`)}
         ${sp ? `
         <aside>
