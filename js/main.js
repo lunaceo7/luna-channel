@@ -1,4 +1,4 @@
-const PEATIX_ORGANIZER_URL = "https://peatix.com/us/group/16558972";
+const PEATIX_ORGANIZER_URL = "https://peatix.com/group/16558972";
 /* ==============================================================
    LUNAチャンネル — main.js
    -----------------------------------------------------------------
