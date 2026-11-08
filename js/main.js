@@ -210,6 +210,57 @@ const SPEAKERS = [
  * 推測で埋めず、フィールド自体を省略すること。
  */
 const SEMINARS = [
+  // Peatix公開ページと主催者一覧を2026-11-08に確認。
+{
+  "id": "u2026-11-17-marketing",
+  "kind": "event",
+  "title": "【無料】ゼロから始められる 集客・マーケティング実践講座",
+  "date": "2026-11-17",
+  "time": "20:00〜21:00（日本時間）",
+  "status": "upcoming",
+  "category": "マーケティング・集客",
+  "speakerId": "ryuzaki",
+  "guestNote": "ルナCEO（AI活用事例）",
+  "format": "オンライン（Zoom）",
+  "applyUrl": "https://peatix.com/event/5257194",
+  "ctaLabel": "無料で申し込む",
+  "tags": [
+    "参加無料",
+    "初心者歓迎"
+  ],
+  "desc": "集客の基本を竜崎悠さんが解説。ルナCEOがAIエージェントの活用事例を紹介します。",
+  "longDesc": [
+    "「誰に・何を・どう届けるか」を整理し、SNS・広告・人とのつながりを集客に活かす考え方を学びます。",
+    "AIエージェントによる企業リサーチや記事のSNS転用など、仕事への取り入れ方も紹介します。",
+    "11月17日・24日は同じテーマです。ご都合のよい回をお選びください。",
+    "無料チケットのお申し込み後、Peatixの「マイチケット」からイベント視聴ページを開き、Zoomの参加方法をご確認ください。"
+  ]
+},
+{
+  "id": "u2026-11-24-marketing",
+  "kind": "event",
+  "title": "【無料】ゼロから始められる 集客・マーケティング実践講座",
+  "date": "2026-11-24",
+  "time": "20:00〜21:00（日本時間）",
+  "status": "upcoming",
+  "category": "マーケティング・集客",
+  "speakerId": "ryuzaki",
+  "guestNote": "ルナCEO（AI活用事例）",
+  "format": "オンライン（Zoom）",
+  "applyUrl": "https://peatix.com/event/5257244",
+  "ctaLabel": "無料で申し込む",
+  "tags": [
+    "参加無料",
+    "初心者歓迎"
+  ],
+  "desc": "集客の基本を竜崎悠さんが解説。ルナCEOがAIエージェントの活用事例を紹介します。",
+  "longDesc": [
+    "「誰に・何を・どう届けるか」を整理し、SNS・広告・人とのつながりを集客に活かす考え方を学びます。",
+    "AIエージェントによる企業リサーチや記事のSNS転用など、仕事への取り入れ方も紹介します。",
+    "11月17日・24日は同じテーマです。ご都合のよい回をお選びください。",
+    "無料チケットのお申し込み後、Peatixの「マイチケット」からイベント視聴ページを開き、Zoomの参加方法をご確認ください。"
+  ]
+},
   // Peatix主催者メールで確認した直近の開催予定
   {
     id: "u2026-10-30-peatix",
@@ -1221,7 +1272,7 @@ function renderSeminarDetail(seminar, container) {
           ${(seminar.meetingId || seminar.passcode) ? `<p style="color:var(--c-gray);font-size:12.5px;margin-bottom:28px;">${seminar.meetingId ? `ミーティングID:${seminar.meetingId}　` : ""}${seminar.passcode ? `パスコード:${seminar.passcode}` : ""}</p>` : `<div style="margin-bottom:28px;"></div>`}
           ` : ""}
           <div class="detail-facts">
-            <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}</div></div>
+            <div class="fact"><div class="label">開催日</div><div class="val" style="font-size:16px;">${seminar.status === "regular" ? seminar.time : displayDate(seminar)}${seminar.status !== "regular" && seminar.time ? `<br>${seminar.time}` : ""}</div></div>
             <div class="fact"><div class="label">形式</div><div class="val" style="font-size:16px;">${seminar.format || "Zoomオンライン開催"}</div></div>
             ${seminar.registration ? `<div class="fact"><div class="label">参加実績</div><div class="val" style="font-size:16px;">${seminar.registration}</div></div>` : ""}
             ${seminar.guestNote ? `<div class="fact"><div class="label">${sp ? "共同登壇" : "登壇"}</div><div class="val" style="font-size:16px;">${seminar.guestNote}</div></div>` : ""}
