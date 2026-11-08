@@ -1,3 +1,4 @@
+const PEATIX_ORGANIZER_URL = "https://peatix.com/us/group/16558972";
 /* ==============================================================
    LUNAチャンネル — main.js
    -----------------------------------------------------------------
@@ -453,6 +454,8 @@ const SEMINARS = [
   },
   {
     id: "s09",
+    desc: "講座を作った、その先は？ AIで制作を進めながら、学びを届けて販売につなげる流れを考えた勉強会。",
+    longDesc: ["「自分の知識を講座にしたい。でも、作り方も届け方もわからない」。そんな出発点から、ChatGPTやGammaを使った講座制作をテーマにした回です。", "Udemyへの公開だけで終わらせず、メルマガやLINEとのつながりにも目を向ける。一本の講座の先に、どんな広がりを作れるのかを考えました。"],
     kind: "event",
     episode: 9,
     title: "Udemy勉強会:自動収入と爆速講座作成",
@@ -471,6 +474,8 @@ const SEMINARS = [
   },
   {
     id: "s11",
+    desc: "自分には何を教えられるだろう。経験や得意を見つめ直し、AIと講座の種を探す回。",
+    longDesc: ["新しい知識を増やす前に、すでに持っている経験に目を向ける。「AI×自己資源」をテーマに、自己理解と講座づくりをつなぐセミナーです。", "ワークシートや講座制作向けGPTを手がかりに、自分では見過ごしていた資源を探る。何を形にできるのか、その可能性に触れる入口になっています。"],
     kind: "event",
     episode: 11,
     title: "AI×自己資源から未来を構築するセミナー",
@@ -480,6 +485,8 @@ const SEMINARS = [
   },
   {
     id: "s12",
+    desc: "講座ができても、声をかける相手が浮かばない。AIと一緒に、届けるための最初の一歩を考える回。",
+    longDesc: ["講座を作ることと、必要な人に届けること。その間にある一歩に目を向けた実践講座です。", "サポーターを探すGPTや声かけ文を考えるGPTを取り上げ、自分の講座をどう広げるかを考える内容。発信を始める前の迷いに向き合います。"],
     kind: "event",
     episode: 12,
     title: "LUNA CEO式:ゼロから講座を広げるAI×実践講座",
@@ -689,6 +696,8 @@ const SEMINARS = [
   },
   {
     id: "s33",
+    desc: "頑張っているのに、なぜ前に進まない？ ビジネスの全体像から、自分の「詰まり」を探した診断セミナー。",
+    longDesc: ["集客、商品づくり、販売。どれか一つを頑張れば、すべてが動くのでしょうか。この回ではビジネスを一つの流れとして捉え、止まっている場所を見つめ直しました。", "自分は今、どこにいるのか。次に力を注ぐ場所はどこなのか。診断を通して、やることを増やす前に考えたい問いを扱っています。"],
     kind: "event",
     episode: 33,
     title: "ボトルネック診断セミナー",
@@ -707,6 +716,8 @@ const SEMINARS = [
   },
   {
     id: "s35",
+    desc: "AIに毎回、一から説明していませんか？ NotebookLM×Geminiで、自分の仕事を知る相棒を考える回。",
+    longDesc: ["AIを使っているのに、なかなか仕事が楽にならない。そのもどかしさを出発点に、NotebookLMとGeminiを組み合わせた活用を取り上げました。", "過去の情報をどう活かし、自分の活動に合う提案につなげるのか。あらやさんとの共同開催で、集客を支えるAIとの付き合い方を考えるセミナーです。"],
     kind: "event",
     episode: 35,
     title: "自動集客セミナー｜NotebookLM×Gemini",
@@ -726,6 +737,8 @@ const SEMINARS = [
   },
   {
     id: "s37",
+    desc: "学んだことは増えたのに、次の一歩が決まらない。「学び沼」から抜け出すために、自分の経験を見直す回。",
+    longDesc: ["セミナーでは意欲が湧くのに、日常に戻ると手が止まる。そんな経験のある方に向けて、学びを行動につなぐ道筋をテーマにしました。", "これまでの経験や知識をどう整理し、何から形にするのか。AIの力も借りながら、「もっと学ばなきゃ」の先にある一歩を考えます。"],
     kind: "event",
     episode: 37,
     title: "ノウハウコレクター卒業セミナー｜3つのステップで脱・学び沼",
@@ -755,6 +768,8 @@ const SEMINARS = [
   },
   {
     id: "s40",
+    desc: "今日の発信を、その場限りで終わらせない。経験やコンテンツを、あとからも届くオンライン資産へ育てる回。",
+    longDesc: ["投稿、動画、講座。手を動かしているのに、毎回ゼロから始めている気がする。この回では、ルナCEOの実践をもとに、活動を積み重ねるための仕組みを扱いました。", "発信と商品、お客様とのつながりをどう結ぶか。ツールを増やす前に、自分の経験をどこで、誰に届けるのかを見つめ直すセミナーです。"],
     kind: "event",
     episode: 40,
     title: "オンライン資産の作り方",
@@ -806,6 +821,8 @@ const SEMINARS = [
   },
   {
     id: "s45",
+    desc: "AIに質問する、その先へ。ケーキマンさんの実演を通して、Claude Codeを仕事に活かす可能性に触れる回。",
+    longDesc: ["ChatGPTを使っているけれど、日々の作業はまだ自分の手で進めている。そんな方に向け、ケーキマンさんを迎えてClaude Codeの実践を取り上げました。", "自分の仕事なら、何を任せられるだろう。AIの新しい使い方を、操作の実演とともに考えるセミナーです。"],
     kind: "event",
     episode: 45,
     title: "ChatGPTだけじゃ足りない理由｜Claude Code × Google I/O 2026",
@@ -817,6 +834,8 @@ const SEMINARS = [
   },
   {
     id: "s46",
+    desc: "「どうせ無理」は、本当に事実？ 蒼月しのさんと、仕事や人間関係を重くする思い込みを見つめる回。",
+    longDesc: ["同じ出来事でも、受け止め方によって次の行動は変わる。「事実」と「解釈」をテーマに、いつの間にか自分を縛っている思い込みに目を向けました。", "売れない、向いていない、うまくいかない。その判断の手前で、一度立ち止まってみる。仕事にも人との関わりにも持ち帰れる問いを扱うセミナーです。"],
     kind: "event",
     episode: 46,
     title: "ビジネスも人間関係も劇的に軽くなる「事実」と「解釈」の思考整理術",
@@ -828,6 +847,8 @@ const SEMINARS = [
   },
   {
     id: "s47",
+    desc: "AIが占える時代に、プロの価値はどこにある？ 栗原さんと、鑑定の違いと仕事への活かし方を考える回。",
+    longDesc: ["AIが出した答えと、経験を重ねた占い師の読み解き。その違いを入口に、栗原さんと占いの専門性を考えるセミナーです。", "便利なツールを使いながら、人にしか届けられないものをどう磨くか。占いを仕事として育てたい方に向けた視点を取り上げています。"],
     kind: "event",
     episode: 47,
     title: "AIには視えない『運命の裏側』を読み解く。プロ占い師とAIを使いこなして最速でオンライン起業する方法",
@@ -855,6 +876,8 @@ const SEMINARS = [
   },
   {
     id: "s49",
+    desc: "「いつか本を出したい」を、もう少し身近に。ながたきさんと、Kindle出版から広がる活動の可能性を考える回。",
+    longDesc: ["本を書くのは、特別な人だけなのでしょうか。ながたきさんを迎え、Kindle作家デビューと、その先の副業やキャリアをテーマにしたセミナーです。", "自分の経験や伝えたいことが、一冊の本になったら。出版を通じて広がる可能性に触れ、最初の一歩を考える入口です。"],
     kind: "event",
     episode: 49,
     title: "夢の印税生活を目指しませんか?Kindle作家デビュー入門",
@@ -1072,14 +1095,14 @@ function upcomingSeminarCard(seminar) {
     </div>
     <div class="upcoming-cta">
       ${seminar.applyUrl
-        ? `<a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow">${seminar.ctaLabel || "参加登録はこちら"}</a>`
+        ? `<a href="${PEATIX_ORGANIZER_URL}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow">開催一覧・申込（Peatix）</a>`
         : `<span class="tag" style="white-space:nowrap;">申込準備中</span>`}
     </div>
   </article>`;
 }
 
 function seminarLink(seminar) {
-  return seminar.status === "upcoming" && seminar.applyUrl && seminar.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"}) ? seminar.applyUrl : `seminars.html?id=${seminar.id}`;
+  return seminar.status === "upcoming" && seminar.applyUrl && seminar.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"}) ? PEATIX_ORGANIZER_URL : `seminars.html?id=${seminar.id}`;
 }
 
 function seminarCard(seminar) {
@@ -1272,7 +1295,7 @@ function renderSeminarDetail(seminar, container) {
           </ul>` : ""}
           ${seminar.desc ? `<p class="lead">${seminar.desc}</p>` : ""}
           ${(seminar.applyUrl && seminar.status === "upcoming" && seminar.date >= new Date().toLocaleDateString("sv-SE", {timeZone: "Asia/Tokyo"})) ? `
-          <a href="${seminar.applyUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:12px;">${seminar.ctaLabel || "参加登録はこちら"}</a>
+          <a href="${PEATIX_ORGANIZER_URL}" target="_blank" rel="noopener" class="btn btn-primary btn-arrow" style="margin-bottom:12px;">開催一覧・申込（Peatix）</a>
           ${(seminar.meetingId || seminar.passcode) ? `<p style="color:var(--c-gray);font-size:12.5px;margin-bottom:28px;">${seminar.meetingId ? `ミーティングID:${seminar.meetingId}　` : ""}${seminar.passcode ? `パスコード:${seminar.passcode}` : ""}</p>` : `<div style="margin-bottom:28px;"></div>`}
           ` : ""}
           <div class="detail-facts">
@@ -1288,7 +1311,7 @@ function renderSeminarDetail(seminar, container) {
         <div class="prose">
           <h2>${seminar.status === "past" ? "この回で出会えた学び" : "セミナー概要"}</h2>
           ${seminar.longDesc.map(p => `<p>${p}</p>`).join("")}
-          ${seminar.status === "past" && upcomingSeminars()[0]?.applyUrl ? `<div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--c-line)"><p>次は、あなたも学びの輪へ。</p><a class="btn btn-primary" href="${upcomingSeminars()[0].applyUrl}">次回の詳細・申込（Peatix） →</a></div>` : ""}
+          ${seminar.status === "past" ? `<div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--c-line)"><p>次は、あなたも学びの輪へ。</p><a class="btn btn-primary" href="${PEATIX_ORGANIZER_URL}">開催一覧・申込（Peatix） →</a></div>` : ""}
         </div>` : (seminar.status === "upcoming" ? "<div></div>" : `<div class="prose"><p style="color:var(--c-gray);">この回の詳細な記録は確認でき次第、追記します。</p></div>`)}
         ${sp ? `
         <aside>
