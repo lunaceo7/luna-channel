@@ -266,6 +266,21 @@ const SEMINARS = [
     "無料チケットのお申し込み後、Peatixの「マイチケット」からイベント視聴ページを開き、Zoomの参加方法をご確認ください。"
   ]
 },
+  {
+    id: "u2026-11-29-ai-side-business",
+    kind: "event",
+    title: "【AI講師が教える】Claude Code・Codexを使ったAI副業を1時間で完全解説セミナー",
+    date: "2026-11-29",
+    time: "20:00〜21:00（日本時間）",
+    status: "upcoming",
+    category: "AI活用",
+    guestNote: "工藤朝拓",
+    format: "オンライン（Google Meet）",
+    applyUrl: "https://peatix.com/event/5278256",
+    linkDirectly: true,
+    tags: ["参加無料", "生成AI", "起業・副業"],
+    desc: "Claude Code・Codexを使い、自分の経験や得意なことを副業のアイデアに変え、商品づくりや集客につなげる方法を学びます。参加無料。"
+  },
   // Peatix主催者メールで確認した直近の開催予定
   {
     id: "u2026-10-30-peatix",
